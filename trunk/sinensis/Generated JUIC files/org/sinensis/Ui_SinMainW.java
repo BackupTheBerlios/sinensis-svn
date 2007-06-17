@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'main.jui'
 **
-** Created: ven. juin 15 07:09:34 2007
+** Created: sam. juin 16 21:20:17 2007
 **      by: Qt User Interface Compiler version 4.3.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -19,11 +19,12 @@ public class Ui_SinMainW
     public QAction actionPrint;
     public QAction actionExport_to_PDF;
     public QAction actionExport_to_text;
-    public QAction actionAbout_this_program;
-    public QAction actionAbout_Qt;
+    public QAction aboutSinensis;
+    public QAction aboutQt;
     public QAction actionNew_search;
     public QAction actionConfigure_interface;
     public QAction actionAdd_edit_databases;
+    public QAction actionCloseW;
     public QWidget centralwidget;
     public QHBoxLayout hboxLayout;
     public QSplitter splitter_4;
@@ -105,16 +106,19 @@ public class Ui_SinMainW
         actionExport_to_PDF.setObjectName("actionExport_to_PDF");
         actionExport_to_text = new QAction(SinMainW);
         actionExport_to_text.setObjectName("actionExport_to_text");
-        actionAbout_this_program = new QAction(SinMainW);
-        actionAbout_this_program.setObjectName("actionAbout_this_program");
-        actionAbout_Qt = new QAction(SinMainW);
-        actionAbout_Qt.setObjectName("actionAbout_Qt");
+        aboutSinensis = new QAction(SinMainW);
+        aboutSinensis.setObjectName("aboutSinensis");
+        aboutSinensis.setIcon(new QIcon());
+        aboutQt = new QAction(SinMainW);
+        aboutQt.setObjectName("aboutQt");
         actionNew_search = new QAction(SinMainW);
         actionNew_search.setObjectName("actionNew_search");
         actionConfigure_interface = new QAction(SinMainW);
         actionConfigure_interface.setObjectName("actionConfigure_interface");
         actionAdd_edit_databases = new QAction(SinMainW);
         actionAdd_edit_databases.setObjectName("actionAdd_edit_databases");
+        actionCloseW = new QAction(SinMainW);
+        actionCloseW.setObjectName("actionCloseW");
         centralwidget = new QWidget(SinMainW);
         centralwidget.setObjectName("centralwidget");
         hboxLayout = new QHBoxLayout(centralwidget);
@@ -424,12 +428,12 @@ public class Ui_SinMainW
         menubar.addAction(menuFile.menuAction());
         menubar.addAction(menuConfigure.menuAction());
         menubar.addAction(menuHelp.menuAction());
-        menuFile.addAction(actionLoad_new_dictionary);
         menuFile.addSeparator();
+        menuFile.addAction(actionCloseW);
         menuFile.addAction(actionQuit);
         menuFile.addAction(actionNew_search);
-        menuHelp.addAction(actionAbout_this_program);
-        menuHelp.addAction(actionAbout_Qt);
+        menuHelp.addAction(aboutSinensis);
+        menuHelp.addAction(aboutQt);
         menuConfigure.addAction(actionConfigure_interface);
         menuConfigure.addAction(actionAdd_edit_databases);
         retranslateUi(SinMainW);
@@ -455,11 +459,12 @@ public class Ui_SinMainW
         actionPrint.setText("Print...");
         actionExport_to_PDF.setText("Export to PDF...");
         actionExport_to_text.setText("Export to text...");
-        actionAbout_this_program.setText("About this program");
-        actionAbout_Qt.setText("About Qt");
+        aboutSinensis.setText("About Sinensis...");
+        aboutQt.setText("About Qt...");
         actionNew_search.setText("New search");
         actionConfigure_interface.setText("Configure interface...");
         actionAdd_edit_databases.setText("Add/edit databases...");
+        actionCloseW.setText("Close window");
         searchTab.setStyleSheet("");
         searchTab.setTabText(searchTab.indexOf(strokeTab), "Strokes");
         keysView.setStyleSheet("");
