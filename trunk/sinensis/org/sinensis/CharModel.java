@@ -25,9 +25,6 @@ import com.trolltech.qt.gui.*;
 // This model displays the characters after a query
 class CharModel extends QStandardItemModel
 {
-//	private DataStore data;
-
-//	public CharModel(QObject parent,DataStore store)
 	Sinensis sin;
 	public CharModel(QObject parent,Sinensis mainApp)
 	{
@@ -37,12 +34,6 @@ class CharModel extends QStandardItemModel
 	public CharModel(QObject parent)
 	{
 		super(0,1,parent);
-//		data=store;
-	}
-	
-	public boolean isEditable()
-	{
-		return false;
 	}
 
 	public void setContent(String s)
@@ -56,5 +47,8 @@ class CharModel extends QStandardItemModel
 		}
 		if(sin!=null && list.length==1)
 			sin.displayChar(index(0,0));
+//		Probably a QtJambi bug: I must specify the font again
+		if(Sinensis.charViewFont!=null)
+			sin.main.selectionView.setFont(Sinensis.charViewFont);
 	}
 }

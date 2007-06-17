@@ -30,6 +30,10 @@ import java.util.*;
 
 public class Sinensis extends QMainWindow
 {
+	public final static String versionStr="0.1 SVN ALPHA";
+	
+	public static QFont charViewFont;
+	
 	public static void main(String[] args) 
 	{
 		QApplication.initialize(args);
@@ -38,6 +42,10 @@ public class Sinensis extends QMainWindow
 		mainw.setStyleSheet(".QWidget{font-size: 16px;font-family: \"Arial Unicode MS\"}");
 		mainw.show();
 		QApplication.exec();
+		
+//		The store object (which lives in another thread) watches this variable in order to exit its main loop
+//		TODO : cleverer mecanism
+//		The current mechanism activate the program every 0.1sec, which is useless most of the time, and bad for a laptop configuration		
 		Sinensis.alive=false;
 	}
 
@@ -50,7 +58,9 @@ public class Sinensis extends QMainWindow
 	private CharModel charModel;
 	private GlyphViewManager gvManager;
 	
+//	Different icons which have to be loaded manually
 	private QIcon sinIcon=new QIcon("classpath:ui/logo32.png");
+	
 	private QSystemTrayIcon tray=new QSystemTrayIcon(sinIcon,this);
 	private QClipboard clipboard=QApplication.clipboard(); 
 	
@@ -66,7 +76,13 @@ public class Sinensis extends QMainWindow
 		QSettings qsettings=new QSettings(this);
 		qsettings.setValue("GUI/guiVisible", true);
 
+//		GUI creation
 		main.setupUi(this);
+		this.setWindowIcon(sinIcon);
+		this.setWindowIconText(tr("Sinensis dictionary"));
+		this.setWindowTitle(tr("Sinensis dictionary"));
+		createActions();
+		main.clearSearchBtn.clicked.connect(this,"clearCharSearch()");
 		
 		tray.setVisible((Boolean)qsettings.value("GUI/showTray",true));
 		tray.activated.connect(this,"changeMainUiStatus(QSystemTrayIcon$ActivationReason)");
@@ -113,10 +129,63 @@ public class Sinensis extends QMainWindow
 		main.selectionView.clicked.connect(this,"displayChar(QModelIndex)");
 		
 		store.loadData();
+		loadConfigurableData();
+
+	}
+	
+//	Sets all the data that can be changed through the config dialog
+//	We want it to have a very dynamic behaviour
+	public void loadConfigurableData()
+	{
+		QSettings set=new QSettings();
+		charViewFont=(QFont)set.value("GUI/charViewFont",new QFont("Arial Unicode MS", 20));
+		
+		if(main==null)
+			return;
+		main.selectionView.setFont(charViewFont);
+	}
+	
+//	Populate the actions, assuming the designer UI has been created
+	private void createActions()
+	{
+		main.aboutQt.triggered.connect(QApplication.instance(),"aboutQt()");
+		main.aboutSinensis.triggered.connect(this,"aboutSinensis()");
+		main.actionCloseW.triggered.connect(this,"changeMainUiStatus()");
+		main.actionQuit.triggered.connect(this,"quit()");
+	}
+	
+	private void quit()
+	{
+System.out.println(tr("Bye bye"));
+		QCoreApplication.quit();
+	}
+	
+	private String aboutStr=String.format(tr("<h1>Sinensis %1$s</h1><p>Copyright 2007 (C) Timothee Hunter (thunter@developer.berlios.de) All rights reserved. </p> <p>This software is provided \"as is\" with the hope it will be of any use to you, and without any warranty. It is released under the GNU General Public License.</p> <p>More information on the <a href=\"http://sinensis.berlios.de\"> Sinensis website</a></p>."),versionStr);
+	private void aboutSinensis()
+	{
+		QMessageBox.about(this,tr("About Sinensis"), aboutStr);
+	}
+	
+//	When we clean the UI to prepare for a new search, the cleaning does not need to trigger a new (useless) query 
+	private boolean charSearchEnabled=true;
+	
+	private void clearCharSearch()
+	{
+//		No query while we are cleaning the interface
+		charSearchEnabled=false;
+		main.pinyinEdit.clear();
+		main.characterEdit.clear();
+		main.unicodeEdit.clear();
+		main.englishEdit.clear();
+		main.strokeNbrEdit.clear();
+		charModel.clear();
+		charSearchEnabled=true;
 	}
 
 	public void buildCharQuery()
 	{
+		if(!charSearchEnabled)
+			return;
 		CCharacterRequest req=new CCharacterRequest();
 		req.addPinyin(main.pinyinEdit.text());
 		req.addTranslation(main.englishEdit.text());
@@ -161,14 +230,14 @@ System.out.println(req);
 			text=clipboard.text(QClipboard.Mode.Clipboard);
 		if(text==null||text.equals(""))
 			return;
-		System.out.println(">>>"+text);
+//		System.out.println(">>>"+text);
 //		Ok, let's see what the user wants us to understand
 //		First, is it a character?
 		if(text.length()==1&&CCharacter.isChineseChar(text.charAt(0)))
 		{
 			CCharacter cchar=store.getChar(text.charAt(0));
 			if(cchar!=null)
-				tray.showMessage("Translation of "+text, cchar.translation());
+				tray.showMessage(String.format(tr("Translation of %1$s"),text), cchar.translation());
 			return;
 		}
 //		So then, it might be a word.
@@ -184,6 +253,11 @@ System.out.println(req);
 		}
 	}
 	
+	private void changeMainUiStatus()
+	{
+		this.setVisible(this.isHidden());
+	}
+	
 	public void displayChar(QModelIndex index)
 	{
 		try
@@ -192,6 +266,7 @@ System.out.println(req);
 		
 		displayChar(c);
 		}catch(Exception e){}
+		System.out.println(main.selectionView.font());
 	}
 	
 	public void displayChar(char uni)
@@ -204,39 +279,10 @@ System.out.println(req);
 	
 	
 	
-	public void setupWordsModel()
-	{
-		
-// 		wordsModel=new QStandardItemModel(0,4,this);
-// 		wProxyModel=new WordsProxyModel(this);
-// 		wProxyModel.setSourceModel(wordsModel);
-// 		wProxyModel.setDynamicSortFilter(true);
-// 		main.wordsListView.setModel(wProxyModel);
-	}
-	
-// 	private void wordsFilterChanged()
-// 	{
-// 		wProxyModel.setTokens(main.wordFilter.text());
-// System.out.println(main.wordFilter.text());
-// 	}
-	
-// 	public void addWords(List<Word> l)
-// 	{
-// // 		for(Word w : l)
-// 		{
-// 			wordsModel.insertRow(0);
-// 			wordsModel.setData(wordsModel.index(0, 0), w.simpl);
-// // 			wordsModel.setData(wordsModel.index(0, 1), w.tradi);
-// 			wordsModel.setData(wordsModel.index(0, 2), w.pinyin);
-// 			wordsModel.setData(wordsModel.index(0, 3), w.trans);
-// 		}
-// 		wordsFilterChanged();
-// 
-// 	}
 	
 	public void setupRadicalModel(List<CCharacter> chars)
 	{
-		main.keysView.setStyleSheet("#keysView{font-size: 20px;font-family: \"Arial Unicode MS\"}");
+//		main.keysView.setStyleSheet("#keysView{font-size: 20px;font-family: \"Arial Unicode MS\"}");
 // 		main.keysView.installEventFilter(new MyEventFilter(main.keysView));
 		main.keysView.setItemDelegate(new RadicalDelegate(main.keysView));
 		main.keysView.verticalHeader().setDefaultSectionSize(RadicalDelegate.sizeHint().height());
@@ -293,63 +339,4 @@ System.out.println("-"+index.data());
 		radicalModel.dataChanged.emit(index,index);
 	}
 	
-	public void selectedWord(QModelIndex index)
-	{
-		
-	}
 }
-/*
-class WordsProxyModel extends QSortFilterProxyModel
-{
-	String [] tokens=null;
-	public WordsProxyModel(QObject parent)
-	{
-		super(parent);
-	}
-	
-	public void setTokens(String u)
-	{
-		tokens=u.split(" ");
-// System.out.println(";");
-		filterChanged();
-	}
-	
-	protected boolean filterAcceptsRow(int sourceRow, QModelIndex sourceParent)
-	{
-// System.out.print(";");
-		if(tokens==null)
-			return true;
-		String zhSim = (String)(sourceModel().index(sourceRow, 0, sourceParent).data());
-		String zhTrad = (String)(sourceModel().index(sourceRow, 1, sourceParent).data());
-		String py = (String)(sourceModel().index(sourceRow, 2, sourceParent).data());
-		String def =(String)(sourceModel().index(sourceRow, 3, sourceParent).data());
-// System.out.print(zhSim+""+zhTrad+py+def);
-		for(int i=0;i<tokens.length;i++)
-			if((zhSim!=null && zhSim.indexOf(tokens[i])>=0) || (zhSim!=null && zhTrad.indexOf(tokens[i])>=0)
-			 || (zhSim!=null && py.indexOf(tokens[i])>=0) || (zhSim!=null && def.indexOf(tokens[i])>=0) )
-				return true;
-
-		return false;
-	}
-}*/
-
-
-// class MyEventFilter extends QObject
-// {
-// 	private QTableView view;
-// 	public MyEventFilter(QTableView v)
-// 	{
-// 		view=v;
-// 	}
-// 	
-// 	public boolean eventFilter(QObject object,QEvent e)
-// 	{
-// 		if(e!=null && (e instanceof QHelpEvent))
-// 		{
-// 			CCharacter c=(CCharacter)view.indexAt(((QHelpEvent)e).pos()).data();
-// // System.out.println(";"+c.get("ZH"));			
-// 		}
-// 		return super.eventFilter(object,e);
-// 	}
-// 	
-// }

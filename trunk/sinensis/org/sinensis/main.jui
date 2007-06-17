@@ -620,8 +620,8 @@ p, li { white-space: pre-wrap; }
     <property name="title" >
      <string>File</string>
     </property>
-    <addaction name="actionLoad_new_dictionary" />
     <addaction name="separator" />
+    <addaction name="actionCloseW" />
     <addaction name="actionQuit" />
     <addaction name="actionNew_search" />
    </widget>
@@ -629,8 +629,8 @@ p, li { white-space: pre-wrap; }
     <property name="title" >
      <string>Help</string>
     </property>
-    <addaction name="actionAbout_this_program" />
-    <addaction name="actionAbout_Qt" />
+    <addaction name="aboutSinensis" />
+    <addaction name="aboutQt" />
    </widget>
    <widget class="QMenu" name="menuConfigure" >
     <property name="title" >
@@ -669,14 +669,17 @@ p, li { white-space: pre-wrap; }
     <string>Export to text...</string>
    </property>
   </action>
-  <action name="actionAbout_this_program" >
+  <action name="aboutSinensis" >
+   <property name="icon" >
+    <iconset/>
+   </property>
    <property name="text" >
-    <string>About this program</string>
+    <string>About Sinensis...</string>
    </property>
   </action>
-  <action name="actionAbout_Qt" >
+  <action name="aboutQt" >
    <property name="text" >
-    <string>About Qt</string>
+    <string>About Qt...</string>
    </property>
   </action>
   <action name="actionNew_search" >
@@ -692,6 +695,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionAdd_edit_databases" >
    <property name="text" >
     <string>Add/edit databases...</string>
+   </property>
+  </action>
+  <action name="actionCloseW" >
+   <property name="text" >
+    <string>Close window</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,5 @@
 //RadicalDelegate.java
-//COPYRIGHT (C) 2007 Timothee HUNTER
+//COPYRIGHT (C) 2007 Timothee HUNTER - All rights reserved.
 //Contact: sinensis-dictionary@gmail.com
 //This file is part of Sinensis.
 //
@@ -26,21 +26,29 @@ import com.trolltech.qt.gui.*;
 
 class RadicalDelegate extends QItemDelegate
 {
-	private static QFont font=new QFont("Arial Unicode MS", 20);
-	private static QFont fontSmall=new QFont("Arial Unicode MS", 10);
-	private static QFontMetrics metrics=new QFontMetrics(font);
-	private static QFontMetrics metricsSmall=new QFontMetrics(font);
+	private static QSettings settings=new QSettings();
 	
-	public static void setFont(QFont f)
+	private static int fontSize;
+	private static QFont font;
+	private static QFont fontSmall;
+	private static QFontMetrics metrics;
+	private static QFontMetrics metricsSmall;
+	
+	public static void loadFont()
 	{
-		font=f;
+		fontSize=(Integer)settings.value("GUI/radicalFontSize",30);
+		font=(QFont)settings.value("GUI/radicalFont",new QFont("Arial Unicode MS", fontSize));
+		fontSmall=new QFont(font);
+		fontSmall.setPointSizeF(fontSize/2);
 		metrics=new QFontMetrics(font);
+		metricsSmall=new QFontMetrics(font);
 	}
 	
 	public RadicalDelegate(QWidget parent)
 	{
 		super(parent);
-// 		installEventFilter(new MyEventFilter());
+		if(font==null)
+			loadFont();
 	}
 	
 	public void paint(QPainter painter, QStyleOptionViewItem option, QModelIndex index)
@@ -49,9 +57,6 @@ class RadicalDelegate extends QItemDelegate
 
 		if (data != null && data instanceof CCharacter) 
 		{
-// 			if (option.state().isSet(QStyle.StateFlag.State_Active)) 
-// 			System.out.println(";");
-// 				painter.fillRect(option.rect(), option.palette().highlight());
 				
 			painter.save();
 			painter.setFont(font);
@@ -75,12 +80,10 @@ class RadicalDelegate extends QItemDelegate
 	public QSize sizeHint(QStyleOptionViewItem option, QModelIndex index)
 	{
 		return sizeHint();
-        }
+    }
 
 	public static QSize sizeHint()
 	{
 		return new QSize(metrics.width("XX"),metrics.height());
-        }
-
-
+    }
 }
