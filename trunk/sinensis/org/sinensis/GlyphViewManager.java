@@ -21,9 +21,13 @@ public class GlyphViewManager
 	
 // 	The bursh used to paint polygons
 //	private QBrush polyBrush=new QBrush();
-
-// 	
+//
+	
+// 	Dummy comment
+	
+	
 //	private QFont displayFont=new QFont();
+	
 	
 	List<MyPolygonItem> flatList=new LinkedList<MyPolygonItem>();
 	
