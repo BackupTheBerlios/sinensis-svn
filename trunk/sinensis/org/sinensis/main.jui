@@ -1,0 +1,797 @@
+<ui version="4.0" language="jambi" >
+ <class>SinMainW</class>
+ <widget class="QMainWindow" name="SinMainW" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QHBoxLayout" >
+    <item>
+     <widget class="QSplitter" name="splitter_4" >
+      <property name="orientation" >
+       <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+      </property>
+      <widget class="QWidget" name="layoutWidget" >
+       <layout class="QVBoxLayout" >
+        <property name="rightMargin" >
+         <number>0</number>
+        </property>
+        <property name="leftMargin" >
+         <number>0</number>
+        </property>
+        <property name="topMargin" >
+         <number>0</number>
+        </property>
+        <property name="bottomMargin" >
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QSplitter" name="splitter_3" >
+          <property name="orientation" >
+           <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+          </property>
+          <widget class="QTabWidget" name="searchTab" >
+           <property name="styleSheet" >
+            <string/>
+           </property>
+           <property name="currentIndex" >
+            <number>2</number>
+           </property>
+           <widget class="QWidget" name="strokeTab" >
+            <attribute name="title" >
+             <string>Strokes</string>
+            </attribute>
+            <layout class="QVBoxLayout" >
+             <item>
+              <widget class="QTableView" name="strokeView" >
+               <property name="frameShape" >
+                <enum>com.trolltech.qt.gui.QFrame.Shape.Box</enum>
+               </property>
+               <property name="frameStyle" >
+                <number>49</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="keysTab" >
+            <attribute name="title" >
+             <string>Keys/Parts</string>
+            </attribute>
+            <layout class="QVBoxLayout" >
+             <item>
+              <layout class="QHBoxLayout" >
+               <property name="rightMargin" >
+                <number>0</number>
+               </property>
+               <property name="leftMargin" >
+                <number>0</number>
+               </property>
+               <property name="topMargin" >
+                <number>0</number>
+               </property>
+               <property name="bottomMargin" >
+                <number>0</number>
+               </property>
+              </layout>
+             </item>
+             <item>
+              <widget class="QTableView" name="keysView" >
+               <property name="autoFillBackground" >
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet" >
+                <string/>
+               </property>
+               <property name="frameStyle" >
+                <number>22</number>
+               </property>
+               <property name="frameShadow" >
+                <enum>com.trolltech.qt.gui.QFrame.Shadow.Plain</enum>
+               </property>
+               <property name="lineWidth" >
+                <number>0</number>
+               </property>
+               <property name="editTriggers" >
+                <set>com.trolltech.qt.gui.QAbstractItemView.EditTrigger.NoEditTriggers</set>
+               </property>
+               <property name="alternatingRowColors" >
+                <bool>true</bool>
+               </property>
+               <property name="selectionMode" >
+                <enum>com.trolltech.qt.gui.QAbstractItemView.SelectionMode.SingleSelection</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="otherTab" >
+            <attribute name="title" >
+             <string>Page</string>
+            </attribute>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" >
+              <layout class="QGridLayout" >
+               <property name="rightMargin" >
+                <number>0</number>
+               </property>
+               <property name="leftMargin" >
+                <number>0</number>
+               </property>
+               <property name="topMargin" >
+                <number>0</number>
+               </property>
+               <property name="bottomMargin" >
+                <number>0</number>
+               </property>
+               <item row="0" column="0" >
+                <widget class="QLabel" name="label" >
+                 <property name="text" >
+                  <string>Pinyin</string>
+                 </property>
+                 <property name="alignment" >
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignAbsolute|com.trolltech.qt.core.Qt.AlignmentFlag.AlignBottom|com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignHCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignHorizontal_Mask|com.trolltech.qt.core.Qt.AlignmentFlag.AlignJustify|com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft|com.trolltech.qt.core.Qt.AlignmentFlag.AlignRight|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop|com.trolltech.qt.core.Qt.AlignmentFlag.AlignVCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignVertical_Mask</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" >
+                <widget class="QPushButton" name="clearPYbut" >
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use this button to clear the pinyin line edit only.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="icon" >
+                  <iconset>classpath:data/editclear.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2" >
+                <widget class="QLineEdit" name="pinyinEdit" >
+                 <property name="focusPolicy" >
+                  <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                 </property>
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Type the pinyin of the character.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">If you have some doubts&lt;/span>, here is what you can type:&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">you3&lt;/span> : I will look for all characters that pronounce "you3"&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">you&lt;/span> : all characters that pronounce "you1", "you2" , etc.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">you yang4&lt;/span> : all characters that pronounce "yang4" &lt;span style=" font-style:italic;">or &lt;/span>"you1" &lt;span style=" font-style:italic;">or&lt;/span> "you2" , etc.&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" >
+                <widget class="QLabel" name="label_2" >
+                 <property name="text" >
+                  <string>Translation</string>
+                 </property>
+                 <property name="alignment" >
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignAbsolute|com.trolltech.qt.core.Qt.AlignmentFlag.AlignBottom|com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignHCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignHorizontal_Mask|com.trolltech.qt.core.Qt.AlignmentFlag.AlignJustify|com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft|com.trolltech.qt.core.Qt.AlignmentFlag.AlignRight|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop|com.trolltech.qt.core.Qt.AlignmentFlag.AlignVCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignVertical_Mask</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" >
+                <widget class="QPushButton" name="clearTransbut" >
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use this button to clear the translation line edit only.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="icon" >
+                  <iconset>classpath:data/editclear.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2" >
+                <widget class="QLineEdit" name="englishEdit" >
+                 <property name="focusPolicy" >
+                  <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                 </property>
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Input one or several english keywords. I will look first for all your keywords, then for any of your keywords.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note English keywords are case-sensitive&lt;/span>. Make sure you are not using capital letters if you do not find any word.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" >
+                <widget class="QLabel" name="label_3" >
+                 <property name="text" >
+                  <string>Number of strokes</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1" >
+                <widget class="QPushButton" name="clearStrokesbut" >
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use this button to clear the number of strokes only.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="icon" >
+                  <iconset>classpath:data/editclear.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2" >
+                <widget class="QLineEdit" name="strokeNbrEdit" >
+                 <property name="focusPolicy" >
+                  <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                 </property>
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Type the number of strokes of the character&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If you specified a key do not include the strokes in the key in your count.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">You are not sure?&lt;/span> No problem. This is what you can type:&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">15 &lt;/span>:  I will look for exaclty 15 strokes&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">15+&lt;/span> : I will look for 15 strokes and above&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">15-&lt;/span> :  I will look for 15 strokes and below&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">13-15&lt;/span> or &lt;span style=" font-weight:600;">13 15&lt;/span> :  I will look between 13 and 15 strokes&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0" >
+                <widget class="QLabel" name="label_4" >
+                 <property name="text" >
+                  <string>Unicode</string>
+                 </property>
+                 <property name="alignment" >
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignAbsolute|com.trolltech.qt.core.Qt.AlignmentFlag.AlignBottom|com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignHCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignHorizontal_Mask|com.trolltech.qt.core.Qt.AlignmentFlag.AlignJustify|com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft|com.trolltech.qt.core.Qt.AlignmentFlag.AlignRight|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop|com.trolltech.qt.core.Qt.AlignmentFlag.AlignVCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignVertical_Mask</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1" >
+                <widget class="QPushButton" name="clearUNIbut" >
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use this button to clear the number of strokes only.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="icon" >
+                  <iconset>classpath:data/editclear.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2" >
+                <widget class="QLineEdit" name="unicodeEdit" >
+                 <property name="focusPolicy" >
+                  <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                 </property>
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Type the unicode character. The following formats are allowed:&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">UNIXXXX&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">uniXXXX&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">XXXX&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">where XXXX is the hexadecimal unicode representation.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0" >
+                <widget class="QLabel" name="label_5" >
+                 <property name="text" >
+                  <string>Chinese character</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1" >
+                <widget class="QPushButton" name="clearZHbut" >
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use this button to clear the number of strokes only.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="icon" >
+                  <iconset>classpath:data/editclear.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2" >
+                <widget class="QLineEdit" name="characterEdit" >
+                 <property name="focusPolicy" >
+                  <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                 </property>
+                 <property name="whatsThis" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Enter the Chinese character.&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0" colspan="3" >
+                <widget class="QPushButton" name="clearSearchBtn" >
+                 <property name="text" >
+                  <string>Clear search and start new search</string>
+                 </property>
+                 <property name="icon" >
+                  <iconset>classpath:data/editclear.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1" >
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+          <widget class="QListView" name="selectionView" >
+           <property name="editTriggers" >
+            <set>com.trolltech.qt.gui.QAbstractItemView.EditTrigger.NoEditTriggers</set>
+           </property>
+           <property name="dragEnabled" >
+            <bool>true</bool>
+           </property>
+           <property name="alternatingRowColors" >
+            <bool>true</bool>
+           </property>
+           <property name="flow" >
+            <enum>com.trolltech.qt.gui.QListView.Flow.LeftToRight</enum>
+           </property>
+           <property name="isWrapping" stdset="0" >
+            <bool>true</bool>
+           </property>
+           <property name="resizeMode" >
+            <enum>com.trolltech.qt.gui.QListView.ResizeMode.Adjust</enum>
+           </property>
+           <property name="layoutMode" >
+            <enum>com.trolltech.qt.gui.QListView.LayoutMode.Batched</enum>
+           </property>
+           <property name="wordWrap" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="progressBar" >
+          <property name="maximumSize" >
+           <size>
+            <width>16777215</width>
+            <height>15</height>
+           </size>
+          </property>
+          <property name="value" >
+           <number>24</number>
+          </property>
+          <property name="textVisible" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QSplitter" name="splitter_2" >
+       <property name="orientation" >
+        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+       </property>
+       <widget class="QTabWidget" name="tabWidget" >
+        <property name="styleSheet" >
+         <string/>
+        </property>
+        <property name="currentIndex" >
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="defTab" >
+         <attribute name="title" >
+          <string>Tab 1</string>
+         </attribute>
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QTextBrowser" name="infosBrowser" >
+            <property name="toolTip" >
+             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">You can customize this display. Look at the options.&lt;/p>&lt;/body>&lt;/html></string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="displayTab" >
+         <attribute name="title" >
+          <string>Page</string>
+         </attribute>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QHBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
+            </property>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QGraphicsView" name="displayView" />
+            </item>
+            <item>
+             <layout class="QGridLayout" >
+              <property name="rightMargin" >
+               <number>0</number>
+              </property>
+              <property name="leftMargin" >
+               <number>0</number>
+              </property>
+              <property name="topMargin" >
+               <number>0</number>
+              </property>
+              <property name="bottomMargin" >
+               <number>0</number>
+              </property>
+              <item row="0" column="0" >
+               <widget class="QPushButton" name="pushButton_2" >
+                <property name="text" >
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" >
+               <widget class="QPushButton" name="pushButton" >
+                <property name="text" >
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" >
+               <widget class="QPushButton" name="pushButton_3" >
+                <property name="text" >
+                 <string>PushButton</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" >
+               <widget class="QPushButton" name="pushButton_5" >
+                <property name="text" >
+                 <string>PushButton</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2" >
+         <attribute name="title" >
+          <string>Tab 2</string>
+         </attribute>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="layoutWidget" >
+        <layout class="QVBoxLayout" >
+         <property name="rightMargin" >
+          <number>0</number>
+         </property>
+         <property name="leftMargin" >
+          <number>0</number>
+         </property>
+         <property name="topMargin" >
+          <number>0</number>
+         </property>
+         <property name="bottomMargin" >
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" >
+           <property name="rightMargin" >
+            <number>0</number>
+           </property>
+           <property name="leftMargin" >
+            <number>0</number>
+           </property>
+           <property name="topMargin" >
+            <number>0</number>
+           </property>
+           <property name="bottomMargin" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="clearButton" >
+             <property name="text" >
+              <string/>
+             </property>
+             <property name="icon" >
+              <iconset>classpath:data/editclear.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="wordFilter" >
+             <property name="focusPolicy" >
+              <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+             </property>
+             <property name="whatsThis" >
+              <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Main word search bar:&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">&lt;span style=" font-weight:400;">You can combine any of the following elements in any order and several times each: &lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">an English keyword: &lt;span style=" font-weight:600;">cellphone&lt;/span> (note that the search is &lt;span style=" text-decoration: underline;">case sensitive&lt;/span>)&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">pinyin, with or without the tonic accent, attached or not:&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">	&lt;span style=" font-weight:600;">shou3ji1 &lt;/span>&lt;span style=" font-style:italic;">or &lt;/span>&lt;span style=" font-weight:600;">shou &lt;/span>&lt;span style=" font-style:italic;">or&lt;/span>&lt;span style=" font-weight:600;"> ji &lt;/span>&lt;span style=" font-style:italic;">or &lt;/span>&lt;span style=" font-weight:600;">shou3 ji1 &lt;/span>&lt;span style=" font-style:italic;">or &lt;/span>&lt;span style=" font-weight:600;">shouji&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">&lt;span style=" font-weight:400;">Chinese characters&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">	手机 &lt;span style=" font-style:italic;">or&lt;/span> 手&lt;span style=" font-style:italic;"> or &lt;/span>&lt;span style=" font-weight:600;">手 机&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QSplitter" name="splitter" >
+           <property name="orientation" >
+            <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+           </property>
+           <widget class="QTableView" name="wordsListView" >
+            <property name="editTriggers" >
+             <set>com.trolltech.qt.gui.QAbstractItemView.EditTrigger.NoEditTriggers</set>
+            </property>
+            <property name="dragDropOverwriteMode" >
+             <bool>false</bool>
+            </property>
+            <property name="alternatingRowColors" >
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior" >
+             <enum>com.trolltech.qt.gui.QAbstractItemView.SelectionBehavior.SelectRows</enum>
+            </property>
+            <property name="sortingEnabled" >
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QTextBrowser" name="wordBrowser" />
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile" >
+    <property name="title" >
+     <string>File</string>
+    </property>
+    <addaction name="actionLoad_new_dictionary" />
+    <addaction name="separator" />
+    <addaction name="actionQuit" />
+    <addaction name="actionNew_search" />
+   </widget>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout_this_program" />
+    <addaction name="actionAbout_Qt" />
+   </widget>
+   <widget class="QMenu" name="menuConfigure" >
+    <property name="title" >
+     <string>Configure</string>
+    </property>
+    <addaction name="actionConfigure_interface" />
+    <addaction name="actionAdd_edit_databases" />
+   </widget>
+   <addaction name="menuFile" />
+   <addaction name="menuConfigure" />
+   <addaction name="menuHelp" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <action name="actionLoad_new_dictionary" >
+   <property name="text" >
+    <string>Load new dictionary</string>
+   </property>
+  </action>
+  <action name="actionQuit" >
+   <property name="text" >
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionPrint" >
+   <property name="text" >
+    <string>Print...</string>
+   </property>
+  </action>
+  <action name="actionExport_to_PDF" >
+   <property name="text" >
+    <string>Export to PDF...</string>
+   </property>
+  </action>
+  <action name="actionExport_to_text" >
+   <property name="text" >
+    <string>Export to text...</string>
+   </property>
+  </action>
+  <action name="actionAbout_this_program" >
+   <property name="text" >
+    <string>About this program</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt" >
+   <property name="text" >
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionNew_search" >
+   <property name="text" >
+    <string>New search</string>
+   </property>
+  </action>
+  <action name="actionConfigure_interface" >
+   <property name="text" >
+    <string>Configure interface...</string>
+   </property>
+  </action>
+  <action name="actionAdd_edit_databases" >
+   <property name="text" >
+    <string>Add/edit databases...</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>clearPYbut</sender>
+   <signal>pressed</signal>
+   <receiver>pinyinEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>141</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>197</x>
+     <y>83</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearTransbut</sender>
+   <signal>pressed</signal>
+   <receiver>englishEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>142</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>175</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearStrokesbut</sender>
+   <signal>pressed</signal>
+   <receiver>strokeNbrEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>146</x>
+     <y>146</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>178</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearUNIbut</sender>
+   <signal>pressed</signal>
+   <receiver>unicodeEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>144</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>170</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearZHbut</sender>
+   <signal>pressed</signal>
+   <receiver>characterEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>152</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>192</x>
+     <y>222</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>pressed</signal>
+   <receiver>wordFilter</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>334</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>372</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
