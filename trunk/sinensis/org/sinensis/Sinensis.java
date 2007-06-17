@@ -50,7 +50,7 @@ public class Sinensis extends QMainWindow
 	private CharModel charModel;
 	private GlyphViewManager gvManager;
 	
-	private QIcon sinIcon=new QIcon("classpath:data/acroread.png");
+	private QIcon sinIcon=new QIcon("classpath:ui/logo32.png");
 	private QSystemTrayIcon tray=new QSystemTrayIcon(sinIcon,this);
 	private QClipboard clipboard=QApplication.clipboard(); 
 	
