@@ -26,7 +26,7 @@ import java.util.*;
 
 public class LoadKeys extends Task
 {
-	final static String filename="classpath:/data/keys.txt";
+	final static String filename="classpath:/db/keys.txt";
 	final static int keyCount=214;
 	List<CCharacter> chars;
 	

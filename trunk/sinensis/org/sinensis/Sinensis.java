@@ -32,14 +32,19 @@ public class Sinensis extends QMainWindow
 {
 	public final static String versionStr="0.1 SVN ALPHA";
 	
+//	The font used to render the character selection list
 	public static QFont charViewFont;
+//	The font used to render the key list
+	public static QFont keyFont;
+//	The font used to render the word selection list
+	public static QFont wordViewFont;
+	
+	
 	
 	public static void main(String[] args) 
 	{
 		QApplication.initialize(args);
 		Sinensis mainw = new Sinensis();
-		mainw.setStyle(new QPlastiqueStyle());
-		mainw.setStyleSheet(".QWidget{font-size: 16px;font-family: \"Arial Unicode MS\"}");
 		mainw.show();
 		QApplication.exec();
 		
@@ -98,18 +103,13 @@ public class Sinensis extends QMainWindow
 		
 		clipboard.changed.connect(this,"displayInfoInline()");
 		clipboard.selectionChanged.connect(this,"displayInfoInline()");
-// 		radicalModel=new RadicalModel();
-// 		main.keysView.
-		
-// 		main.keysView.clicked.connect(this,"clickedKey(QModelIndex)");
-// 		main.keysView.activated.connect(this,"clickedKey(QModelIndex)");
-// 		main.keysView.viewportEntered.connect(this,"clickedKey()");
+
 		wordsModel=new WordsModel(this,store,this);
 		main.wordsListView.verticalHeader().setVisible(false);
 		main.wordsListView.horizontalHeader().setVisible(true);
 		main.wordsListView.setModel(wordsModel);
 		store.wordSearchReady.connect(wordsModel,"setContent(String)");
-// 		store.wordSearchReady.connect(main.wordsListView,"resizeColumnsToContents()");
+
 		main.wordFilter.textChanged.connect(this,"lookForWord(String)");
 		main.wordsListView.clicked.connect(this,"displayWord(QModelIndex)");
 
@@ -138,11 +138,33 @@ public class Sinensis extends QMainWindow
 	public void loadConfigurableData()
 	{
 		QSettings set=new QSettings();
-		charViewFont=(QFont)set.value("GUI/charViewFont",new QFont("Arial Unicode MS", 20));
+		int i=10;
+		Object o=null;
+		o=set.value("GUI/charViewFontSize",10);
+		if(o instanceof Integer)
+			i=(Integer)o;
+		if(o instanceof String)
+			i=Integer.parseInt((String)o);
+		charViewFont=(QFont)set.value("GUI/charViewFont",new QFont("Arial Unicode MS", i));
 		
+		o=set.value("GUI/keyViewFontSize",10);
+		if(o instanceof Integer)
+			i=(Integer)o;
+		if(o instanceof String)
+			i=Integer.parseInt((String)o);
+		keyFont=(QFont)set.value("GUI/keyViewFont",new QFont("Arial Unicode MS", i));
+
+		o=set.value("GUI/wordViewFontSize",10);
+		if(o instanceof Integer)
+			i=(Integer)o;
+		if(o instanceof String)
+			i=Integer.parseInt((String)o);
+		wordViewFont=(QFont)set.value("GUI/wordViewFont",new QFont("Arial Unicode MS", i));
 		if(main==null)
 			return;
 		main.selectionView.setFont(charViewFont);
+		main.keysView.setFont(keyFont);
+		main.wordsListView.setFont(wordViewFont);
 	}
 	
 //	Populate the actions, assuming the designer UI has been created
@@ -152,6 +174,15 @@ public class Sinensis extends QMainWindow
 		main.aboutSinensis.triggered.connect(this,"aboutSinensis()");
 		main.actionCloseW.triggered.connect(this,"changeMainUiStatus()");
 		main.actionQuit.triggered.connect(this,"quit()");
+		main.actionWhatsThis.triggered.connect(this,"whatIsThis()");
+		main.actionConfigure_interface.setEnabled(true);
+		main.actionConfigure_interface.triggered.connect(this,"openConfigDialog()");
+		
+	}
+	
+	private void whatIsThis()
+	{
+		QWhatsThis.enterWhatsThisMode();
 	}
 	
 	private void quit()
@@ -181,6 +212,7 @@ System.out.println(tr("Bye bye"));
 		charModel.clear();
 		charSearchEnabled=true;
 	}
+	
 
 	public void buildCharQuery()
 	{
@@ -198,7 +230,6 @@ System.out.println(req);
 	
 	public void lookForWord(String u)
 	{	
-// System.out.println("u");
 		store.lookForWord(u);
 	}
 	
@@ -339,4 +370,62 @@ System.out.println("-"+index.data());
 		radicalModel.dataChanged.emit(index,index);
 	}
 	
+
+	private Ui_ConfigUIWidget ui_configUiWidget;
+	private void configSaveApplyChanges()
+	{
+		if(ui_configUiWidget==null)
+			return;
+		QSettings settings=new QSettings();
+		settings.setValue("GUI/SysTrayEnabled", ui_configUiWidget.trayEnabledCheck.isChecked());
+		settings.setValue("GUI/StartMinimized", ui_configUiWidget.startMinimizedCheck.isChecked());
+		
+		settings.setValue("GUI/charViewFont", ui_configUiWidget.charFontCombo.currentFont());
+		settings.setValue("GUI/wordViewFont", ui_configUiWidget.wordFontCombo.currentFont());
+		settings.setValue("GUI/keyViewFont", ui_configUiWidget.keyFontCombo.currentFont());
+		
+		settings.setValue("GUI/charViewFontSize", ui_configUiWidget.charFontSpin.value());
+		settings.setValue("GUI/wordViewFontSize", ui_configUiWidget.wordFontSpin.value());
+		settings.setValue("GUI/keyViewFontSize", ui_configUiWidget.keyFontSpin.value());
+		
+		settings.sync();
+		
+		loadConfigurableData();
+	}
+	
+	private void openConfigDialog()
+	{
+		QDialog dialog=new QDialog(this);
+		Ui_Dialog ui_dialog=new Ui_Dialog();
+		ui_dialog.setupUi(dialog);
+		
+		QWidget widgetUi=new QWidget(dialog);
+		ui_configUiWidget=new Ui_ConfigUIWidget();
+		ui_configUiWidget.setupUi(widgetUi);
+		
+		ui_dialog.stackedWidget.addWidget(widgetUi);
+		ui_dialog.stackedWidget.setCurrentWidget(widgetUi);
+		
+		ui_configUiWidget.charFontCombo.setWritingSystem(QFontDatabase.WritingSystem.SimplifiedChinese);
+		ui_configUiWidget.keyFontCombo.setWritingSystem(QFontDatabase.WritingSystem.SimplifiedChinese);
+		ui_configUiWidget.wordFontCombo.setWritingSystem(QFontDatabase.WritingSystem.SimplifiedChinese);
+		
+		ui_configUiWidget.charFontCombo.currentFontChanged.connect(this,"configSaveApplyChanges()");
+		ui_configUiWidget.wordFontCombo.currentFontChanged.connect(this,"configSaveApplyChanges()");
+		ui_configUiWidget.keyFontCombo.currentFontChanged.connect(this,"configSaveApplyChanges()");
+		
+		ui_configUiWidget.charFontCombo.setCurrentFont(charViewFont);
+		ui_configUiWidget.keyFontCombo.setCurrentFont(keyFont);
+		ui_configUiWidget.wordFontCombo.setCurrentFont(wordViewFont);
+		
+		ui_configUiWidget.charFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
+		ui_configUiWidget.keyFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
+		ui_configUiWidget.wordFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
+		
+		
+		
+		dialog.setVisible(true);
+
+	}
+
 }

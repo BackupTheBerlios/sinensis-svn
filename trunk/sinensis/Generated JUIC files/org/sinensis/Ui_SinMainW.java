@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'main.jui'
 **
-** Created: sam. juin 16 21:20:17 2007
+** Created: sam. juin 16 22:36:11 2007
 **      by: Qt User Interface Compiler version 4.3.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -23,8 +23,9 @@ public class Ui_SinMainW
     public QAction aboutQt;
     public QAction actionNew_search;
     public QAction actionConfigure_interface;
-    public QAction actionAdd_edit_databases;
+    public QAction actionDatabases;
     public QAction actionCloseW;
+    public QAction actionWhatsThis;
     public QWidget centralwidget;
     public QHBoxLayout hboxLayout;
     public QSplitter splitter_4;
@@ -115,10 +116,14 @@ public class Ui_SinMainW
         actionNew_search.setObjectName("actionNew_search");
         actionConfigure_interface = new QAction(SinMainW);
         actionConfigure_interface.setObjectName("actionConfigure_interface");
-        actionAdd_edit_databases = new QAction(SinMainW);
-        actionAdd_edit_databases.setObjectName("actionAdd_edit_databases");
+        actionConfigure_interface.setEnabled(false);
+        actionDatabases = new QAction(SinMainW);
+        actionDatabases.setObjectName("actionDatabases");
+        actionDatabases.setEnabled(false);
         actionCloseW = new QAction(SinMainW);
         actionCloseW.setObjectName("actionCloseW");
+        actionWhatsThis = new QAction(SinMainW);
+        actionWhatsThis.setObjectName("actionWhatsThis");
         centralwidget = new QWidget(SinMainW);
         centralwidget.setObjectName("centralwidget");
         hboxLayout = new QHBoxLayout(centralwidget);
@@ -130,7 +135,7 @@ public class Ui_SinMainW
         layoutWidget.setObjectName("layoutWidget");
         vboxLayout = new QVBoxLayout(layoutWidget);
         vboxLayout.setObjectName("vboxLayout");
-        vboxLayout.setContentsMargins(0, 0, 0, 0);
+//        vboxLayout.setContentsMargins(0, 0, 0, 0);
         splitter_3 = new QSplitter(layoutWidget);
         splitter_3.setObjectName("splitter_3");
         splitter_3.setOrientation(com.trolltech.qt.core.Qt.Orientation.Vertical);
@@ -154,7 +159,7 @@ public class Ui_SinMainW
         vboxLayout2.setObjectName("vboxLayout2");
         hboxLayout1 = new QHBoxLayout();
         hboxLayout1.setObjectName("hboxLayout1");
-        hboxLayout1.setContentsMargins(0, 0, 0, 0);
+//        hboxLayout1.setContentsMargins(0, 0, 0, 0);
 
         vboxLayout2.addLayout(hboxLayout1);
 
@@ -177,7 +182,7 @@ public class Ui_SinMainW
         gridLayout.setObjectName("gridLayout");
         gridLayout1 = new QGridLayout();
         gridLayout1.setObjectName("gridLayout1");
-        gridLayout1.setContentsMargins(0, 0, 0, 0);
+//        gridLayout1.setContentsMargins(0, 0, 0, 0);
         label = new QLabel(otherTab);
         label.setObjectName("label");
         label.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignAbsolute,com.trolltech.qt.core.Qt.AlignmentFlag.AlignBottom,com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter,com.trolltech.qt.core.Qt.AlignmentFlag.AlignHCenter,com.trolltech.qt.core.Qt.AlignmentFlag.AlignHorizontal_Mask,com.trolltech.qt.core.Qt.AlignmentFlag.AlignJustify,com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft,com.trolltech.qt.core.Qt.AlignmentFlag.AlignRight,com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop,com.trolltech.qt.core.Qt.AlignmentFlag.AlignVCenter,com.trolltech.qt.core.Qt.AlignmentFlag.AlignVertical_Mask));
@@ -186,7 +191,7 @@ public class Ui_SinMainW
 
         clearPYbut = new QPushButton(otherTab);
         clearPYbut.setObjectName("clearPYbut");
-        clearPYbut.setIcon(new QIcon(new QPixmap("classpath:data/editclear.png")));
+        clearPYbut.setIcon(new QIcon(new QPixmap("classpath:ui/editclear.png")));
 
         gridLayout1.addWidget(clearPYbut, 0, 1, 1, 1);
 
@@ -204,7 +209,7 @@ public class Ui_SinMainW
 
         clearTransbut = new QPushButton(otherTab);
         clearTransbut.setObjectName("clearTransbut");
-        clearTransbut.setIcon(new QIcon(new QPixmap("classpath:data/editclear.png")));
+        clearTransbut.setIcon(new QIcon(new QPixmap("classpath:ui/editclear.png")));
 
         gridLayout1.addWidget(clearTransbut, 1, 1, 1, 1);
 
@@ -221,7 +226,7 @@ public class Ui_SinMainW
 
         clearStrokesbut = new QPushButton(otherTab);
         clearStrokesbut.setObjectName("clearStrokesbut");
-        clearStrokesbut.setIcon(new QIcon(new QPixmap("classpath:data/editclear.png")));
+        clearStrokesbut.setIcon(new QIcon(new QPixmap("classpath:ui/editclear.png")));
 
         gridLayout1.addWidget(clearStrokesbut, 2, 1, 1, 1);
 
@@ -239,7 +244,7 @@ public class Ui_SinMainW
 
         clearUNIbut = new QPushButton(otherTab);
         clearUNIbut.setObjectName("clearUNIbut");
-        clearUNIbut.setIcon(new QIcon(new QPixmap("classpath:data/editclear.png")));
+        clearUNIbut.setIcon(new QIcon(new QPixmap("classpath:ui/editclear.png")));
 
         gridLayout1.addWidget(clearUNIbut, 3, 1, 1, 1);
 
@@ -256,7 +261,7 @@ public class Ui_SinMainW
 
         clearZHbut = new QPushButton(otherTab);
         clearZHbut.setObjectName("clearZHbut");
-        clearZHbut.setIcon(new QIcon(new QPixmap("classpath:data/editclear.png")));
+        clearZHbut.setIcon(new QIcon(new QPixmap("classpath:ui/editclear.png")));
 
         gridLayout1.addWidget(clearZHbut, 4, 1, 1, 1);
 
@@ -268,7 +273,7 @@ public class Ui_SinMainW
 
         clearSearchBtn = new QPushButton(otherTab);
         clearSearchBtn.setObjectName("clearSearchBtn");
-        clearSearchBtn.setIcon(new QIcon(new QPixmap("classpath:data/editclear.png")));
+        clearSearchBtn.setIcon(new QIcon(new QPixmap("classpath:ui/editclear.png")));
 
         gridLayout1.addWidget(clearSearchBtn, 6, 0, 1, 3);
 
@@ -287,7 +292,7 @@ public class Ui_SinMainW
         selectionView.setDragEnabled(true);
         selectionView.setAlternatingRowColors(true);
         selectionView.setFlow(com.trolltech.qt.gui.QListView.Flow.LeftToRight);
-        selectionView.setProperty("isWrapping", true);
+//        selectionView.setProperty("isWrapping", true);
         selectionView.setResizeMode(com.trolltech.qt.gui.QListView.ResizeMode.Adjust);
         selectionView.setLayoutMode(com.trolltech.qt.gui.QListView.LayoutMode.Batched);
         selectionView.setWordWrap(true);
@@ -325,7 +330,7 @@ public class Ui_SinMainW
         vboxLayout4.setObjectName("vboxLayout4");
         hboxLayout2 = new QHBoxLayout();
         hboxLayout2.setObjectName("hboxLayout2");
-        hboxLayout2.setContentsMargins(0, 0, 0, 0);
+//        hboxLayout2.setContentsMargins(0, 0, 0, 0);
         displayView = new QGraphicsView(displayTab);
         displayView.setObjectName("displayView");
 
@@ -333,7 +338,7 @@ public class Ui_SinMainW
 
         gridLayout2 = new QGridLayout();
         gridLayout2.setObjectName("gridLayout2");
-        gridLayout2.setContentsMargins(0, 0, 0, 0);
+//        gridLayout2.setContentsMargins(0, 0, 0, 0);
         pushButton_2 = new QPushButton(displayTab);
         pushButton_2.setObjectName("pushButton_2");
 
@@ -369,13 +374,13 @@ public class Ui_SinMainW
         layoutWidget1.setObjectName("layoutWidget1");
         vboxLayout5 = new QVBoxLayout(layoutWidget1);
         vboxLayout5.setObjectName("vboxLayout5");
-        vboxLayout5.setContentsMargins(0, 0, 0, 0);
+//        vboxLayout5.setContentsMargins(0, 0, 0, 0);
         hboxLayout3 = new QHBoxLayout();
         hboxLayout3.setObjectName("hboxLayout3");
-        hboxLayout3.setContentsMargins(0, 0, 0, 0);
+//        hboxLayout3.setContentsMargins(0, 0, 0, 0);
         clearButton = new QPushButton(layoutWidget1);
         clearButton.setObjectName("clearButton");
-        clearButton.setIcon(new QIcon(new QPixmap("classpath:data/editclear.png")));
+        clearButton.setIcon(new QIcon(new QPixmap("classpath:ui/editclear.png")));
 
         hboxLayout3.addWidget(clearButton);
 
@@ -434,8 +439,9 @@ public class Ui_SinMainW
         menuFile.addAction(actionNew_search);
         menuHelp.addAction(aboutSinensis);
         menuHelp.addAction(aboutQt);
+        menuHelp.addAction(actionWhatsThis);
         menuConfigure.addAction(actionConfigure_interface);
-        menuConfigure.addAction(actionAdd_edit_databases);
+        menuConfigure.addAction(actionDatabases);
         retranslateUi(SinMainW);
         clearPYbut.pressed.connect(pinyinEdit, "clear()");
         clearTransbut.pressed.connect(englishEdit, "clear()");
@@ -447,8 +453,6 @@ public class Ui_SinMainW
         searchTab.setCurrentIndex(2);
         tabWidget.setCurrentIndex(0);
 
-
-        SinMainW.connectSlotsByName();
     } // setupUi
 
     void retranslateUi(QMainWindow SinMainW)
@@ -463,8 +467,9 @@ public class Ui_SinMainW
         aboutQt.setText("About Qt...");
         actionNew_search.setText("New search");
         actionConfigure_interface.setText("Configure interface...");
-        actionAdd_edit_databases.setText("Add/edit databases...");
+        actionDatabases.setText("Add/edit databases...");
         actionCloseW.setText("Close window");
+        actionWhatsThis.setText("Contextual help");
         searchTab.setStyleSheet("");
         searchTab.setTabText(searchTab.indexOf(strokeTab), "Strokes");
         keysView.setStyleSheet("");

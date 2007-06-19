@@ -25,7 +25,7 @@ import java.util.*;
 
 public class LoadWords extends Task
 {
-	final static String filename="data/cedict.txt";
+	final static String filename="classpath:/db/cedict.txt";
 	final static int wordsCount=40000;
 // 	Vector<Word> chars;
 	

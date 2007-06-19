@@ -1,3 +1,8 @@
 Manifest-Version: 1.0
 Main-Class: org.sinensis.Sinensis
+Class-Path: qtjambi.jar
+
+
+
+
 

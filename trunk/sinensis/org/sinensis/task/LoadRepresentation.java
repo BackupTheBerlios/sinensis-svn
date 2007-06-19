@@ -24,7 +24,7 @@ import com.trolltech.qt.core.*;
 
 public class LoadRepresentation extends Task
 {
-	public static String fileName="db/1.db";
+	public static String fileName="classpath:/db/1.db";
 	private final static int countLimit=50000;
 	
 	public LoadRepresentation()

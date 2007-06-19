@@ -23,7 +23,7 @@ import com.trolltech.qt.core.*;
 
 public class LoadCharactersUNICHIN extends Task
 {
-	final static String filename="data/UNICHIN.TXT";
+	final static String filename="classpath:/db/UNICHIN.TXT";
 	
 // 	For debugging purpose mainly
 	final static int maxCount=10000000;
