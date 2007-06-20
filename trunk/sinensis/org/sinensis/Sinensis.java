@@ -88,6 +88,7 @@ public class Sinensis extends QMainWindow
 		this.setWindowTitle(tr("Sinensis dictionary"));
 		createActions();
 		main.clearSearchBtn.clicked.connect(this,"clearCharSearch()");
+		loadConfigurableData();
 		
 		tray.setVisible((Boolean)qsettings.value("GUI/showTray",true));
 		tray.activated.connect(this,"changeMainUiStatus(QSystemTrayIcon$ActivationReason)");
@@ -162,9 +163,13 @@ public class Sinensis extends QMainWindow
 		wordViewFont=(QFont)set.value("GUI/wordViewFont",new QFont("Arial Unicode MS", i));
 		if(main==null)
 			return;
+System.out.println("##"+keyFont+" "+keyFont.pointSize());
 		main.selectionView.setFont(charViewFont);
+		main.selectionView.repaint();
 		main.keysView.setFont(keyFont);
+		main.keysView.repaint();
 		main.wordsListView.setFont(wordViewFont);
+		main.wordsListView.repaint();
 	}
 	
 //	Populate the actions, assuming the designer UI has been created
@@ -395,6 +400,8 @@ System.out.println("-"+index.data());
 	
 	private void openConfigDialog()
 	{
+		QSettings settings=new QSettings();
+		
 		QDialog dialog=new QDialog(this);
 		Ui_Dialog ui_dialog=new Ui_Dialog();
 		ui_dialog.setupUi(dialog);
@@ -418,6 +425,10 @@ System.out.println("-"+index.data());
 		ui_configUiWidget.keyFontCombo.setCurrentFont(keyFont);
 		ui_configUiWidget.wordFontCombo.setCurrentFont(wordViewFont);
 		
+		ui_configUiWidget.charFontSpin.setValue(Integer.parseInt((String)settings.value("GUI/charViewFontSize")));
+		ui_configUiWidget.wordFontSpin.setValue(Integer.parseInt((String)settings.value("GUI/wordViewFontSize")));
+		ui_configUiWidget.keyFontSpin.setValue(Integer.parseInt((String)settings.value("GUI/keyViewFontSize")));
+
 		ui_configUiWidget.charFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
 		ui_configUiWidget.keyFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
 		ui_configUiWidget.wordFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");

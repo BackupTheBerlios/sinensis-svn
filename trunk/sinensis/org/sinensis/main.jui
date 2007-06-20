@@ -21,6 +21,18 @@
       </property>
       <widget class="QWidget" name="layoutWidget" >
        <layout class="QVBoxLayout" >
+        <property name="rightMargin" >
+         <number>0</number>
+        </property>
+        <property name="leftMargin" >
+         <number>0</number>
+        </property>
+        <property name="topMargin" >
+         <number>0</number>
+        </property>
+        <property name="bottomMargin" >
+         <number>0</number>
+        </property>
         <item>
          <widget class="QSplitter" name="splitter_3" >
           <property name="orientation" >
@@ -31,7 +43,7 @@
             <string/>
            </property>
            <property name="currentIndex" >
-            <number>2</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="strokeTab" >
             <attribute name="title" >
@@ -57,6 +69,18 @@
             <layout class="QVBoxLayout" >
              <item>
               <layout class="QHBoxLayout" >
+               <property name="rightMargin" >
+                <number>0</number>
+               </property>
+               <property name="leftMargin" >
+                <number>0</number>
+               </property>
+               <property name="topMargin" >
+                <number>0</number>
+               </property>
+               <property name="bottomMargin" >
+                <number>0</number>
+               </property>
               </layout>
              </item>
              <item>
@@ -65,7 +89,7 @@
                 <bool>true</bool>
                </property>
                <property name="styleSheet" >
-                <string/>
+                <string>background:white;</string>
                </property>
                <property name="frameStyle" >
                 <number>22</number>
@@ -96,6 +120,18 @@
             <layout class="QGridLayout" >
              <item row="0" column="0" >
               <layout class="QGridLayout" >
+               <property name="rightMargin" >
+                <number>0</number>
+               </property>
+               <property name="leftMargin" >
+                <number>0</number>
+               </property>
+               <property name="topMargin" >
+                <number>0</number>
+               </property>
+               <property name="bottomMargin" >
+                <number>0</number>
+               </property>
                <item row="0" column="0" >
                 <widget class="QLabel" name="label" >
                  <property name="text" >
@@ -118,7 +154,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:ui/editclear.png</iconset>
+                  <iconset>classpath:data/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -162,7 +198,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:ui/editclear.png</iconset>
+                  <iconset>classpath:data/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -199,7 +235,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:ui/editclear.png</iconset>
+                  <iconset>classpath:data/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -245,7 +281,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:ui/editclear.png</iconset>
+                  <iconset>classpath:data/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -285,7 +321,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:ui/editclear.png</iconset>
+                  <iconset>classpath:data/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -308,7 +344,7 @@ p, li { white-space: pre-wrap; }
                   <string>Clear search and start new search</string>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:ui/editclear.png</iconset>
+                  <iconset>classpath:data/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -411,11 +447,35 @@ p, li { white-space: pre-wrap; }
          <layout class="QVBoxLayout" >
           <item>
            <layout class="QHBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
+            </property>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
+            </property>
             <item>
              <widget class="QGraphicsView" name="displayView" />
             </item>
             <item>
              <layout class="QGridLayout" >
+              <property name="rightMargin" >
+               <number>0</number>
+              </property>
+              <property name="leftMargin" >
+               <number>0</number>
+              </property>
+              <property name="topMargin" >
+               <number>0</number>
+              </property>
+              <property name="bottomMargin" >
+               <number>0</number>
+              </property>
               <item row="0" column="0" >
                <widget class="QPushButton" name="pushButton_2" >
                 <property name="text" >
@@ -458,13 +518,39 @@ p, li { white-space: pre-wrap; }
        </widget>
        <widget class="QWidget" name="layoutWidget" >
         <layout class="QVBoxLayout" >
+         <property name="rightMargin" >
+          <number>0</number>
+         </property>
+         <property name="leftMargin" >
+          <number>0</number>
+         </property>
+         <property name="topMargin" >
+          <number>0</number>
+         </property>
+         <property name="bottomMargin" >
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" >
+           <property name="rightMargin" >
+            <number>0</number>
+           </property>
+           <property name="leftMargin" >
+            <number>0</number>
+           </property>
+           <property name="topMargin" >
+            <number>0</number>
+           </property>
+           <property name="bottomMargin" >
+            <number>0</number>
+           </property>
            <item>
             <widget class="QPushButton" name="clearButton" >
              <property name="text" >
               <string/>
              </property>
              <property name="icon" >
-              <iconset>classpath:ui/editclear.png</iconset>
+              <iconset>classpath:data/editclear.png</iconset>
              </property>
             </widget>
            </item>
@@ -552,7 +638,7 @@ p, li { white-space: pre-wrap; }
      <string>Configure</string>
     </property>
     <addaction name="actionConfigure_interface" />
-    <addaction name="actionDatabases" />
+    <addaction name="actionAdd_edit_databases" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuConfigure" />
@@ -603,17 +689,11 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionConfigure_interface" >
-   <property name="enabled" >
-    <bool>false</bool>
-   </property>
    <property name="text" >
     <string>Configure interface...</string>
    </property>
   </action>
-  <action name="actionDatabases" >
-   <property name="enabled" >
-    <bool>false</bool>
-   </property>
+  <action name="actionAdd_edit_databases" >
    <property name="text" >
     <string>Add/edit databases...</string>
    </property>
