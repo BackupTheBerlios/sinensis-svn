@@ -35,13 +35,16 @@ public class LoadCharactersUNICHIN extends Task
 	{
 		setTaskName("Loading characters...");
 	
-	        QFile file=new QFile(filename);
+	    QFile file=new QFile(filename);
 		if (!file.open(QIODevice.OpenModeFlag.ReadOnly))
 		{
 			setTaskName("Loading characters... error in loading file");
 			return;
 		}
-		QTextStream in=new QTextStream(file);
+//		This setting is quite memory agressive, but this is what we want in the end
+		QTextStream in=new QTextStream(file.readAll());
+//		Not forget to specify the file locale
+		in.setCodec("UTF-8");
 		int count=0;
 		while(!in.atEnd()&&count<maxCount)
 		{
@@ -65,7 +68,7 @@ public class LoadCharactersUNICHIN extends Task
 			CCharacter cchar=new CCharacter(uni);
 			try{
 			if(key.indexOf("-")<0)
-				cchar.put("KEY",key);
+				cchar.put("KEY_ID",key);
 			if(remStrokes.indexOf("-")<0)
 				cchar.put("STROKESREM",Integer.parseInt(remStrokes));
 			if(strokes.indexOf("-")<0)

@@ -23,13 +23,19 @@ import java.util.*;
 
 public class CCharacterRequest
 {
+//	
 	public Map<String,String> tokens=new HashMap<String,String>();
+	
+//	Mainly used to store the parts of the character the user recognizes
+//	Stored using keys COUNT_KEYS and COUNT_UNIXXXX
 	public Map<String,Integer> tokensInt=new HashMap<String,Integer>();
 // 	Min and max number of strokes, key excluded
+	
 	public int maxStrokes=256,minStrokes=0;
 // 	A Chinese character may have multiple pinyins.
 // 	If the user knows them, he/she/it can input them, with or without tones
-// 	A match will need all the pinyins
+// 	A best match will need all the pinyins
+//	A partial match will match one of the pinyins
 	public Vector<String> pinyins=new Vector<String>();
 // 	Translation tokens
 	public Vector<String> translation=new Vector<String>();
@@ -45,6 +51,9 @@ public class CCharacterRequest
 		return false;
 	}
 
+//	Returns a score for the character, giving a level of confidence that this what the user is loking for (very subjective)
+//	0 means that this character is not relevant
+//	The higher the better
 	public int accepts(CCharacter c)
 	{
 // 		Bad number of strokes
@@ -52,16 +61,24 @@ public class CCharacterRequest
 			return 0;
 // 		Check for the pinyin
 		final String py=c.get("PY");
+		
+		int res=0;
+		
 // 		DEBUG : no pinyin? What the heck?
 		if(py==null)
 		{
 // 			System.out.println("Warning: no pinyin found for character"+c);
 			return 0;
 		}
-		
+
 		else for(String s:pinyins)
-			if(py.indexOf(s)<0)
-				return 0;
+			if(py.indexOf(s)>=0)
+				res++;
+		
+//		The user gave some pinyin and no pinyin is matching? Discard it. 
+		if(res==0&&pinyins.size()>0)
+			return 0;
+			
 		
 		
 // 		TODO: make it possible to change the language (use the Settings class)
@@ -71,25 +88,48 @@ public class CCharacterRequest
 // 			System.out.println("Warning: no translation found for character"+c);
 			return 0;
 		}
-		else for(String s:translation)
-			if(trans.indexOf(s)<0)
+		else 
+		{
+			int resTrans=0;
+			for(String s:translation)
+				if(trans.indexOf(s)>=0)
+					resTrans++;
+			
+			if(resTrans==0&&translation.size()>0)
 				return 0;
+			res+=resTrans;
+		}
+			
 		
 		for(String s:tokens.keySet())
 			if(c.get(s)==null)
 				return 0;
-			else if(c.get(s).toLowerCase().indexOf(tokens.get(s))<0)
-				return 0;
+			else
+			{
+				if(c.get(s).toLowerCase().indexOf(tokens.get(s))<0)
+					return 0;
+				else res++;
+			}
+				
 
 		for(String s:tokensInt.keySet())
 			if(!c.hasInt(s))
 				return 0;
+//		We are looking for a character using the unicode value and the values do not correspond
 			else if(s.equals("UNI")&&c.getInt(s)!=tokensInt.get(s))
 				return 0;		
-			else if(c.getInt(s)<tokensInt.get(s))
-				return 0;
+//		Probably looking for a key
+			else
+			{
+				if(c.getInt(s)<tokensInt.get(s))
+					return 0;
+//				4 is an arbitrary value 
+				if(c.getInt(s)==tokensInt.get(s))
+					res+=4;
+				else res++;
+			}
 // 		Good
-		return 1;
+		return res;
 	}
 	
 	public void addPinyin(String s)

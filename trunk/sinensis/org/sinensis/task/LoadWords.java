@@ -20,6 +20,7 @@ package org.sinensis.task;
 
 import org.sinensis.data.*;
 import com.trolltech.qt.core.*;
+
 import java.util.*;
 
 
@@ -41,8 +42,11 @@ public class LoadWords extends Task
 	        QFile file=new QFile(filename);
 		if (!file.open(QIODevice.OpenModeFlag.ReadOnly))
 			return;
-		QTextStream in=new QTextStream(file);
-// 		int count=0;
+//		This setting is quite memory agressive, but this is what we want in the end
+//		This makes the inital loading *much* faster
+		QTextStream in=new QTextStream(file.readAll());
+//		Not forget to specify the file locale
+		in.setCodec("UTF-8");
 		
 // 		We skip the first line
 		in.readLine();

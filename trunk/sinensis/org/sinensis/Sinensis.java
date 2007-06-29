@@ -49,28 +49,42 @@ public class Sinensis extends QMainWindow
 		QApplication.exec();
 		
 //		The store object (which lives in another thread) watches this variable in order to exit its main loop
-//		TODO : cleverer mecanism
+//		TODO : cleverer mecanism using signals/slots
 //		The current mechanism activate the program every 0.1sec, which is useless most of the time, and bad for a laptop configuration		
 		Sinensis.alive=false;
 	}
 
+//	The store object (which lives in another thread) watches this variable in order to exit its main loop
+//	TODO : cleverer mecanism using signals/slots
 	public static boolean alive=true;
 
 
+//	The backend which contains all the data
 	public DataStore store;
+//	The model used for storing radicals/keys
 	public QStandardItemModel radicalModel;
+//	The model used for storing result words
 	public WordsModel wordsModel;
+//	The model used for storing characters
 	private CharModel charModel;
+//	The glyph manager
+//	TODO
 	private GlyphViewManager gvManager;
 	
 //	Different icons which have to be loaded manually
 	private QIcon sinIcon=new QIcon("classpath:ui/logo32.png");
 	
+//	Use the system tray
 	private QSystemTrayIcon tray=new QSystemTrayIcon(sinIcon,this);
+//	Use the clipboard for interaction with the desktop
 	private QClipboard clipboard=QApplication.clipboard(); 
 	
+//	Settings
+//	TODO : switch to the QSettings mechanism
+//	TODO : rename it to IOInterface
 	static public Settings settings=new Settings();
 
+//	QtDesigner file
 	public Ui_SinMainW main=new Ui_SinMainW();
 	
 	public Sinensis()
@@ -87,6 +101,7 @@ public class Sinensis extends QMainWindow
 		this.setWindowIconText(tr("Sinensis dictionary"));
 		this.setWindowTitle(tr("Sinensis dictionary"));
 		createActions();
+		
 		main.clearSearchBtn.clicked.connect(this,"clearCharSearch()");
 		loadConfigurableData();
 		
@@ -136,6 +151,7 @@ public class Sinensis extends QMainWindow
 	
 //	Sets all the data that can be changed through the config dialog
 //	We want it to have a very dynamic behaviour
+//	A bit ugly sometimes since the qsettings has trouble making a difference between String and Integer
 	public void loadConfigurableData()
 	{
 		QSettings set=new QSettings();
@@ -163,7 +179,7 @@ public class Sinensis extends QMainWindow
 		wordViewFont=(QFont)set.value("GUI/wordViewFont",new QFont("Arial Unicode MS", i));
 		if(main==null)
 			return;
-System.out.println("##"+keyFont+" "+keyFont.pointSize());
+//System.out.println("##"+keyFont+" "+keyFont.pointSize());
 		main.selectionView.setFont(charViewFont);
 		main.selectionView.repaint();
 		main.keysView.setFont(keyFont);
@@ -216,9 +232,12 @@ System.out.println(tr("Bye bye"));
 		main.strokeNbrEdit.clear();
 		charModel.clear();
 		charSearchEnabled=true;
+		if(keyList!=null)
+			for(CCharacter c: keyList)
+				c.put("SELECTION", 0);
 	}
 	
-
+// building a CCharacterSearch and passing it to the datastore
 	public void buildCharQuery()
 	{
 		if(!charSearchEnabled)
@@ -229,10 +248,21 @@ System.out.println(tr("Bye bye"));
 		req.addStrokeNbr(main.strokeNbrEdit.text());
 		req.addUnicode(main.unicodeEdit.text());
 		req.addChinese(main.characterEdit.text());
+		if(keyList!=null)
+			for(CCharacter c: keyList)
+				if(c.hasInt("SELECTION")&&c.getInt("SELECTION")>0)
+				{
+					System.out.println("###"+c);
+					req.tokensInt.put(c.get("KEY_ID"), 1);
+				}
+					
+//					req.tokensInt.put("COUNT_UNI"+c.get("UNI"), c.getInt("SELECTION"));
 System.out.println(req);
 		store.lookFor(req);
 	}
 	
+//	Giving a word query to the datastore
+//	The inout here is only one line => we pass it directly to the datastore
 	public void lookForWord(String u)
 	{	
 		store.lookForWord(u);
@@ -266,7 +296,6 @@ System.out.println(req);
 			text=clipboard.text(QClipboard.Mode.Clipboard);
 		if(text==null||text.equals(""))
 			return;
-//		System.out.println(">>>"+text);
 //		Ok, let's see what the user wants us to understand
 //		First, is it a character?
 		if(text.length()==1&&CCharacter.isChineseChar(text.charAt(0)))
@@ -314,7 +343,11 @@ System.out.println(req);
 	}
 	
 	
-	
+//	The list of the keys
+	private List<CCharacter> keyList;
+//	The list of the strokes
+//	TODO : implement the stroke interface
+	private List<CCharacter> strokesList;
 	
 	public void setupRadicalModel(List<CCharacter> chars)
 	{
@@ -325,16 +358,18 @@ System.out.println(req);
 		main.keysView.horizontalHeader().setDefaultSectionSize(RadicalDelegate.sizeHint().width());
 		main.keysView.verticalHeader().setVisible(false);
 		main.keysView.horizontalHeader().setVisible(false);
+		
+		keyList=chars;
 
 		final int cols=10;
 		Vector< Vector<CCharacter> > myData=new Vector< Vector<CCharacter> >(200);
 		for(int i=0;i<200;i++)
 			myData.add(i,new Vector<CCharacter>());
 			
-		for(CCharacter c : chars)
+		for(CCharacter c : keyList)
 		{
-			myData.get(c.getInt("Strokes")).add(c);
-			c.put("SelectStroke",0);
+			myData.get(c.getInt("STROKES")).add(c);
+			c.put("SELECTION",0);
 		}
 
 		radicalModel=new QStandardItemModel(1,cols,this);
@@ -360,18 +395,18 @@ System.out.println(req);
 	public void clickedKey(QModelIndex index)
 	{
 System.out.println("+"+index.data());	
-		int u=((CCharacter)index.data()).getInt("SelectStroke");
-		((CCharacter)index.data()).put("SelectStroke",u+1);
+		int u=((CCharacter)index.data()).getInt("SELECTION");
+		((CCharacter)index.data()).put("SELECTION",u+1);
 		radicalModel.dataChanged.emit(index,index);
 	}
 
 	public void doubleclickedKey(QModelIndex index)
 	{
 System.out.println("-"+index.data());	
-		int u=((CCharacter)index.data()).getInt("SelectStroke")-4;
+		int u=((CCharacter)index.data()).getInt("SELECTION")-4;
 // 		if(u<0)
 // 			u=0;
-		((CCharacter)index.data()).put("SelectStroke",u);
+		((CCharacter)index.data()).put("SELECTION",u);
 		radicalModel.dataChanged.emit(index,index);
 	}
 	

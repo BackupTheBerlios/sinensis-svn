@@ -61,7 +61,7 @@ class RadicalDelegate extends QItemDelegate
 			painter.save();
 			painter.setFont(font);
 			painter.drawText(option.rect(),0, ((CCharacter)data).get("ZH"));
-			int u=((CCharacter)data).getInt("SelectStroke");
+			int u=((CCharacter)data).getInt("SELECTION");
 			if(u>0)
 			{
 				final int dx=metricsSmall.width(""+u)+2;

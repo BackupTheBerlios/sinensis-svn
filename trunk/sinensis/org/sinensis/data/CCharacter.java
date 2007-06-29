@@ -46,8 +46,9 @@ public class CCharacter
 // 	FREQ : statistical information on the character
 // 	keys related to character shape (used to speed up research)
 // 	COUNT_UNIXXXX : the number of occurences of character XXXX in this character
-// 	COUNT_KEY[1-214] : convenience mapping
+// 	KEY_ID : gives the # of the key (1-214)
 // 	Printable: this character is printable
+//	SELECTION: if this character was selected as a key or a stroke, the number of times it was selected
 
 	private HashMap<String,Integer> infosInt=new HashMap<String,Integer>();
 	public GlyphNode representation=null;

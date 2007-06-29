@@ -42,7 +42,10 @@ System.out.println("XXXX");
 	        QFile file=new QFile(filename);
 		if (!file.open(QIODevice.OpenModeFlag.ReadOnly))
 			return;
-		QTextStream in=new QTextStream(file);
+//		This setting is quite memory agressive, but this is what we want in the end
+		QTextStream in=new QTextStream(file.readAll());
+//		Not forget to specify the file locale
+		in.setCodec("UTF-8");
 		int count=0;
 		while(!in.atEnd())
 		{
@@ -53,10 +56,10 @@ System.out.println("XXXX");
 			String fr=t[3];
 			String strokes=""+(count/6+1);
 			CCharacter c=new CCharacter();
-			c.put("keyID",count+1);
+			c.put("KEY_ID",count+1);
 			c.put("ZH",zh);
 			c.put("FR",fr);
-			c.put("Strokes",Integer.parseInt(strokes));
+			c.put("STROKES",Integer.parseInt(strokes));
 			chars.add(c);
 			count++;
 // System.out.println(c);
