@@ -37,11 +37,16 @@ public class LoadKeys extends Task
 	
 	public void run()
 	{
-//System.out.println("XXXX");
 		setTaskName("reading keys...");
 	        QFile file=new QFile(filename);
 		if (!file.open(QIODevice.OpenModeFlag.ReadOnly))
+		{
+			System.out.println("Could not open key description "+filename);
 			return;
+			
+		}
+		
+		System.out.println("Opening key description "+filename);
 //		This setting is quite memory agressive, but this is what we want in the end
 		QTextStream in=new QTextStream(file.readAll());
 //		Not forget to specify the file locale
@@ -67,22 +72,33 @@ public class LoadKeys extends Task
 // System.out.println(c);
 			setCounter(100*count/keyCount);
 		}
-		QApplication.invokeLater(new AddRadical());
+		
+		dataStore.setRadicals(chars);
+		dataStore.radicalsLoaded.emit();
+		
+//		BUG
+//		QApplication.invokeLater(new AddRadical());
+
 	}
 	
-	public class AddRadical implements Runnable
-	{
-// 		private CCharacter cchar;
-// 		public AddRadical(CCharacter c)
-// 		{
-// 			cchar=c;
-// 		}
-		
-		public void run()
-		{
-			mainUI.setupRadicalModel(chars);
-// 			mainUI.radicalModel.setRadicals(chars);
-// 			mainUI.setStyleSheet("{color: yellow;font-size: 16px;font-family: \"Arial Unicode MS\"}");
-		}
-	}
+//	public class AddRadical implements Runnable
+//	{
+//		public AddRadical()
+//		{
+//			System.out.println("YYYY");
+//		}
+//// 		private CCharacter cchar;
+//// 		public AddRadical(CCharacter c)
+//// 		{
+//// 			cchar=c;
+//// 		}
+//		
+//		public void run()
+//		{
+//			System.out.println("YYYY");
+//			mainUI.setupRadicalModel(chars);
+//// 			mainUI.radicalModel.setRadicals(chars);
+//// 			mainUI.setStyleSheet("{color: yellow;font-size: 16px;font-family: \"Arial Unicode MS\"}");
+//		}
+//	}
 }

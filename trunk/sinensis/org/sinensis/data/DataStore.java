@@ -22,6 +22,7 @@ package org.sinensis.data;
 import org.sinensis.task.*;
 import org.sinensis.*;
 
+import com.trolltech.qt.*;
 import com.trolltech.qt.core.*;
 import java.util.concurrent.*;
 import java.util.*;
@@ -30,6 +31,7 @@ public class DataStore extends QObject implements Runnable
 {
 	public Map<Integer,CCharacter> charMap=new HashMap<Integer,CCharacter>();
 	public List<Word> words;
+	private List<CCharacter> radicals;
 	
 	public List<CCharacter> currentSearch;
 	public List<Word> currentWordSearch;
@@ -38,7 +40,7 @@ public class DataStore extends QObject implements Runnable
 	private Queue<Task> tasks; 
 //	private CCharacterRequest currentCharQuery=null;
 	
-	Sinensis mainUI;
+//	Sinensis mainUI;
 	
 	public QObject.Signal1<String> status = new QObject.Signal1<String>();
 	public QObject.Signal1<Integer> progress = new QObject.Signal1<Integer>();
@@ -46,10 +48,12 @@ public class DataStore extends QObject implements Runnable
 	public QObject.Signal1<String> wordSearchReady = new QObject.Signal1<String>();
 	public QObject.Signal1<String> charSearchReady = new QObject.Signal1<String>();
 	
-	public DataStore(Sinensis main)
+	public QObject.Signal0 radicalsLoaded = new QObject.Signal0();
+	
+	public DataStore()
 	{
 // 		super(main);
-		mainUI=main;
+//		mainUI=main;
 		currentSearch=new LinkedList<CCharacter>();
 		currentWordSearch=new LinkedList<Word>();
 		words=new LinkedList<Word>();
@@ -57,7 +61,7 @@ public class DataStore extends QObject implements Runnable
 		tasks=new LinkedBlockingQueue<Task>();
 	}
 
-	public void lookFor(CCharacterRequest req)
+	public void lookForChar(CCharacterRequest req)
 	{
 // 	TODO : speed optimization, if it is worth it
 // 		if(currentCharQuery!=null)
@@ -94,17 +98,17 @@ System.out.println("..."+s);
 		return charMap.get(unicode);
 	}*/
 	
-	public CCharacter getChar(int unicode)
+	synchronized public CCharacter getChar(int unicode)
 	{
 		return charMap.get(unicode);
 	}
 
-	public CCharacter getChar(char c)
+	synchronized public CCharacter getChar(char c)
 	{
 		return charMap.get((int)c);
 	}
 	
-	public Word getWord(String simp)
+	synchronized public Word getWord(String simp)
 	{
 // System.out.println(simp);
 		for(Word w:words)
@@ -116,6 +120,7 @@ System.out.println("..."+s);
 	
 	public void loadData()
 	{
+		System.out.println("......");
 		addTask(new LoadKeys());
 		addTask(new LoadWords());
 		addTask(new LoadCharactersUNICHIN());
@@ -124,23 +129,42 @@ System.out.println("..."+s);
 	
 	public void addTask(Task t)
 	{
-		tasks.offer(t);
+		
+		status.emit("...");
+//		Thread th=new Thread(t);
+//		QThread nt=new QThread(th);
+//		this.moveToThread(nt);
+//		nt.start();
+		t.run();
+//		tasks.offer(t);
 	}
 	
 	public void run()
 	{
-		while(true&&Sinensis.alive)
-		{
-			Task t=tasks.poll();
-			if(t!=null)
-				t.run();
-			
-		try
-		{
-			Thread.sleep(100);
-		}catch(Exception e){}
-		}
-		dispose();
+	     QEventLoop eventLoop = new QEventLoop();
+	     eventLoop.exec();
+//		while(true&&Sinensis.alive)
+//		{
+//			Task t=tasks.poll();
+//			if(t!=null)
+//				t.run();
+//			
+//		try
+//		{
+//			Thread.sleep(100);
+//		}catch(Exception e){}
+//		}
+//		dispose();
+	}
+	
+	public synchronized List<CCharacter> radicals()
+	{
+		return radicals;
+	}
+
+	public synchronized  void setRadicals(List<CCharacter> l)
+	{
+		radicals=l;
 	}
 }
 

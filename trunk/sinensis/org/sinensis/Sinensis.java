@@ -84,6 +84,12 @@ public class Sinensis extends QMainWindow
 //	TODO : rename it to IOInterface
 	static public Settings settings=new Settings();
 
+//	This signal is sent when the UI is created
+//	It is used to update the models
+	public QObject.Signal0 readyToFillUI = new QObject.Signal0();
+	
+	public QObject.Signal1<CCharacterRequest> charQueryReadyToProcess = new QObject.Signal1<CCharacterRequest>();
+	
 //	QtDesigner file
 	public Ui_SinMainW main=new Ui_SinMainW();
 	
@@ -109,13 +115,14 @@ public class Sinensis extends QMainWindow
 		tray.activated.connect(this,"changeMainUiStatus(QSystemTrayIcon$ActivationReason)");
 		
 		Task.mainUI=this;
-		store=new DataStore(this);
+		store=new DataStore();
+		QThread thread=new QThread(store);
+		store.moveToThread(thread);
+		thread.setDaemon(true);
+		thread.start();
 		gvManager=new GlyphViewManager(main.displayView,store);
 		store.progress.connect(main.progressBar,"setValue(int)",Qt.ConnectionType.QueuedConnection);
 		store.status.connect(statusBar(),"showMessage(String)",Qt.ConnectionType.QueuedConnection);
-		QThread thread=new QThread(store);
-		store.moveToThread(thread);
-		thread.start();
 		
 		clipboard.changed.connect(this,"displayInfoInline()");
 		clipboard.dataChanged.connect(this,"displayInfoInline()");
@@ -126,7 +133,11 @@ public class Sinensis extends QMainWindow
 		main.keysView.horizontalHeader().setDefaultSectionSize(RadicalDelegate.sizeHint().width());
 		main.keysView.verticalHeader().setVisible(false);
 		main.keysView.horizontalHeader().setVisible(false);
-		radicalModel=new RadicalModel(this);
+		radicalModel=new RadicalModel(this,store);
+//		main.keysView.setModel(radicalModel);
+		main.keysView.clicked.connect(radicalModel,"increaseCount(QModelIndex)");
+		main.keysView.doubleClicked.connect(radicalModel,"decreaseCount(QModelIndex)");
+//		radicalModel.dataChanged.connect(main.keysView,"repaint()");
 		radicalModel.dataChanged.connect(this,"buildCharQuery()");
 //		main.keysView.activated.connect(this,"clickedKey(QModelIndex)");
 		
@@ -136,7 +147,7 @@ public class Sinensis extends QMainWindow
 		main.wordsListView.setModel(wordsModel);
 		store.wordSearchReady.connect(wordsModel,"setContent(String)");
 
-		main.wordFilter.textChanged.connect(this,"lookForWord(String)");
+		main.wordFilter.textChanged.connect(store,"lookForWord(String)");
 		main.wordsListView.clicked.connect(this,"displayWord(QModelIndex)");
 
 		main.pinyinEdit.textChanged.connect(this,"buildCharQuery()");
@@ -148,14 +159,20 @@ public class Sinensis extends QMainWindow
 		charModel=new CharModel(this,this);
 		store.charSearchReady.connect(charModel,"setContent(String)");
 		
-		
 		main.selectionView.setModel(charModel);
 		main.selectionView.setViewMode(QListView.ViewMode.IconMode);
 		main.selectionView.setWrapping(true);
 		main.selectionView.clicked.connect(this,"displayChar(QModelIndex)");
 		
-		store.loadData();
+		
+//		store.loadData();
 		loadConfigurableData();
+		
+		readyToFillUI.connect(store,"loadData()");
+//		store.radicalsLoaded.connect(this,"fillModel()");
+		store.radicalsLoaded.connect(this,"fillRadicalModel()");
+		charQueryReadyToProcess.connect(store,"lookForChar(CCharacterRequest)");
+		readyToFillUI.emit();
 
 	}
 	
@@ -262,15 +279,21 @@ System.out.println(tr("Bye bye"));
 //			System.out.println("###"+c.getInt("KEY_ID"));
 			req.tokensInt.put("KEY_ID", c.getInt("KEY_ID"));
 		}
-		store.lookFor(req);
+		charQueryReadyToProcess.emit(req);
+//		store.lookFor(req);
 	}
 	
 //	Giving a word query to the datastore
 //	The inout here is only one line => we pass it directly to the datastore
-	public void lookForWord(String u)
-	{	
-		store.lookForWord(u);
-	}
+//	public void lookForWord(String u)
+//	{	
+//		store.lookForWord(u);
+//	}
+	
+//	public void fillModel()
+//	{
+//		System.out.println(store.foo());
+//	}
 	
 	public void displayWord(QModelIndex index)
 	{
@@ -282,6 +305,13 @@ System.out.println(tr("Bye bye"));
 		String s=(String)(i.data());
 		
 		displayWord(s);
+	}
+	
+	public void fillRadicalModel()
+	{
+		radicalModel.fillModel();
+		main.keysView.setModel(radicalModel);
+		
 	}
 	
 	public void displayWord(String word)
@@ -347,26 +377,8 @@ System.out.println(tr("Bye bye"));
 	{
 // 		gvManager.loadGlyph(uni);
 		CCharacter c=store.getChar(uni);
-//		System.out.println(">>>"+c+"\n>>>"+settings.formatChar(c));
 		main.infosBrowser.setText(settings.formatChar(c));
 	}
-	
-	
-//	The list of the keys
-//	private List<CCharacter> keyList;
-//	The list of the strokes
-//	TODO : implement the stroke interface
-	private List<CCharacter> strokesList;
-	
-	public void setupRadicalModel(List<CCharacter> chars)
-	{
-		radicalModel.fill(chars);
-//		I don't know why, I have nothing if these lines are put before
-		main.keysView.setModel(radicalModel);
-		main.keysView.clicked.connect(radicalModel,"increaseCount(QModelIndex)");
-		main.keysView.doubleClicked.connect(radicalModel,"decreaseCount(QModelIndex)");
-	}
-	
 
 	private Ui_ConfigUIWidget ui_configUiWidget;
 	private void configSaveApplyChanges()
