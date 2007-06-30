@@ -37,7 +37,7 @@ public class LoadKeys extends Task
 	
 	public void run()
 	{
-System.out.println("XXXX");
+//System.out.println("XXXX");
 		setTaskName("reading keys...");
 	        QFile file=new QFile(filename);
 		if (!file.open(QIODevice.OpenModeFlag.ReadOnly))
@@ -46,22 +46,24 @@ System.out.println("XXXX");
 		QTextStream in=new QTextStream(file.readAll());
 //		Not forget to specify the file locale
 		in.setCodec("UTF-8");
-		int count=0;
+		int count=1;
 		while(!in.atEnd())
 		{
 			String line=in.readLine();
 			String [] t=line.split("\t");
-//			String id=t[0];
+			String id=t[0];
 			String zh=t[1];
 			String fr=t[3];
 			String strokes=""+(count/6+1);
 			CCharacter c=new CCharacter();
-			c.put("KEY_ID",count+1);
+			
+			c.put("KEY_ID",count);
 			c.put("ZH",zh);
 			c.put("FR",fr);
 			c.put("STROKES",Integer.parseInt(strokes));
 			chars.add(c);
-			count++;
+			if(id.indexOf(".")<0)
+				count++;
 // System.out.println(c);
 			setCounter(100*count/keyCount);
 		}

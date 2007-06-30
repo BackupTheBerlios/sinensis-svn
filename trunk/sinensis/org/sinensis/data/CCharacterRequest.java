@@ -68,7 +68,7 @@ public class CCharacterRequest
 		if(py==null)
 		{
 // 			System.out.println("Warning: no pinyin found for character"+c);
-			return 0;
+//			return 0;
 		}
 
 		else for(String s:pinyins)
@@ -83,17 +83,21 @@ public class CCharacterRequest
 		
 // 		TODO: make it possible to change the language (use the Settings class)
 		final String trans=c.get("EN");
-		if(trans==null)
+		if(trans==null||trans.equals(""))
 		{
 // 			System.out.println("Warning: no translation found for character"+c);
-			return 0;
+//			return 0;
 		}
 		else 
 		{
 			int resTrans=0;
 			for(String s:translation)
 				if(trans.indexOf(s)>=0)
+				{
 					resTrans++;
+//					System.out.println("T>>"+s+"<< "+c);
+				}
+					
 			
 			if(resTrans==0&&translation.size()>0)
 				return 0;
@@ -108,26 +112,41 @@ public class CCharacterRequest
 			{
 				if(c.get(s).toLowerCase().indexOf(tokens.get(s))<0)
 					return 0;
-				else res++;
+				else
+				{
+					res++;
+					System.out.println(s+" "+c);
+				}
 			}
 				
-
 		for(String s:tokensInt.keySet())
 			if(!c.hasInt(s))
 				return 0;
 //		We are looking for a character using the unicode value and the values do not correspond
 			else if(s.equals("UNI")&&c.getInt(s)!=tokensInt.get(s))
 				return 0;		
+//		We are looking for the radical
+			else if(s.equals("KEY_ID")&&c.getInt(s)!=tokensInt.get(s))
+				return 0;		
 //		Probably looking for a key
 			else
 			{
+//				System.out.println(s+" "+(tokensInt.get(s)==c.getInt(s)));
 				if(c.getInt(s)<tokensInt.get(s))
 					return 0;
 //				4 is an arbitrary value 
 				if(c.getInt(s)==tokensInt.get(s))
 					res+=4;
-				else res++;
+				if(c.getInt(s)>tokensInt.get(s))
+				{
+					res++;
+					System.out.println(s+" "+c);
+				}
+					
 			}
+		c.queryScore=res;
+//		We can even print it!
+		c.put("CHAR_SCORE", res);
 // 		Good
 		return res;
 	}
@@ -162,13 +181,6 @@ public class CCharacterRequest
 		String[] pys=s.split(" ");
 		for(int i=0;i<pys.length;i++)
 			request.pinyins.add(pys[i]);
-//		Vector<String> vec=new Vector<String>();
-//		if(!WordQuery.heuristicPinYin(vec,s))
-//			return false;
-//		if(request!=null)
-//		{
-//			request.pinyins.addAll(vec);
-//		}
 		return true;
 	}
 	
@@ -289,7 +301,8 @@ System.out.println(">>>"+u);
 		String[] a=s.split(" ");
 		if(request!=null)
 			for(int i=0;i<a.length;i++)
-				request.translation.add(a[i]);
+				if(!a[i].equals(""))
+					request.translation.add(a[i]);
 		return true;
 	}
 	

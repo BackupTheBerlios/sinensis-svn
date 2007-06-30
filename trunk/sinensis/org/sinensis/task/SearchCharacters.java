@@ -28,20 +28,34 @@ public class SearchCharacters extends Task
 	CCharacterRequest query;
 	Collection<CCharacter> dic;
 	
+	static TreeSet<CCharacter> tree=new TreeSet<CCharacter>(new Comp());
+	
 	public SearchCharacters(CCharacterRequest req, Collection<CCharacter> d)
 	{
 		query=req;
 		dic=d;
+		
 	}
 	
 	public void run()
 	{
-		List<CCharacter> list= new LinkedList<CCharacter>();
+//		List<CCharacter> list= new LinkedList<CCharacter>();
 		query.prepare();
+		
+		tree.clear();
 		
 		for(CCharacter c:dic)
 			if(query.accepts(c)>=1)
-				list.add(c);
+			{
+//				System.out.println(c);
+				tree.add(c);
+//				list.add(c);
+			}
+				
+		List<CCharacter> list= new LinkedList<CCharacter>();
+		
+		for(CCharacter c : tree)
+			list.add(c);
 		
 		dataStore.currentSearch=list;
 		
@@ -53,6 +67,7 @@ public class SearchCharacters extends Task
 			res+=(char)c.getInt("UNI")+" ";
 			if(counter>=SEARCH_HARD_LIMIT)
 			{
+				System.out.println(res);
 				dataStore.charSearchReady.emit(res);
 				return;
 			}
@@ -60,15 +75,29 @@ public class SearchCharacters extends Task
 		}
 		
 		dataStore.charSearchReady.emit(res);
-		QApplication.invokeLater(new CleanUI());
-	}
-	
-	public class CleanUI implements Runnable
-	{
-		public void run()
-		{
-// 			mainUI.main.selectionView.resizeColumnsToContents();
-		}
 	}
 }
 
+//Sorts the elements  by their score
+class Comp implements Comparator<CCharacter>
+{
+	public int compare(CCharacter c1,CCharacter c2)
+	{
+		if(c1.queryScore>c2.queryScore)
+			return 1;
+		if(c1.queryScore!=c2.queryScore)
+			return -1;
+		if(c1.hasInt("FREQ")&&c2.hasInt("FREQ"))
+		{
+			if(c1.getInt("FREQ")<c2.getInt("FREQ"))
+				return 1;
+			if(c1.getInt("FREQ")!=c2.getInt("FREQ"))
+				return -1;
+		}
+		if(c1.hashCode()>c2.hashCode())
+			return 1;
+		if(c1.hashCode()<c2.hashCode())
+			return 1;
+		return 0;
+	}
+}

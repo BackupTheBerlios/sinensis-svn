@@ -47,8 +47,9 @@ class CharModel extends QStandardItemModel
 		}
 		if(sin!=null && list.length==1)
 			sin.displayChar(index(0,0));
+		
 //		Probably a QtJambi bug: I must specify the font again
-		if(Sinensis.charViewFont!=null)
-			sin.main.selectionView.setFont(Sinensis.charViewFont);
+//		if(Sinensis.charViewFont!=null)
+//			sin.main.selectionView.setFont(Sinensis.charViewFont);
 	}
 }

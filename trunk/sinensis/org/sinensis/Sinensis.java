@@ -62,7 +62,7 @@ public class Sinensis extends QMainWindow
 //	The backend which contains all the data
 	public DataStore store;
 //	The model used for storing radicals/keys
-	public QStandardItemModel radicalModel;
+	public RadicalModel radicalModel;
 //	The model used for storing result words
 	public WordsModel wordsModel;
 //	The model used for storing characters
@@ -118,8 +118,18 @@ public class Sinensis extends QMainWindow
 		thread.start();
 		
 		clipboard.changed.connect(this,"displayInfoInline()");
+		clipboard.dataChanged.connect(this,"displayInfoInline()");
 		clipboard.selectionChanged.connect(this,"displayInfoInline()");
 
+		main.keysView.setItemDelegate(new RadicalDelegate(main.keysView));
+		main.keysView.verticalHeader().setDefaultSectionSize(RadicalDelegate.sizeHint().height());
+		main.keysView.horizontalHeader().setDefaultSectionSize(RadicalDelegate.sizeHint().width());
+		main.keysView.verticalHeader().setVisible(false);
+		main.keysView.horizontalHeader().setVisible(false);
+		radicalModel=new RadicalModel(this);
+		radicalModel.dataChanged.connect(this,"buildCharQuery()");
+//		main.keysView.activated.connect(this,"clickedKey(QModelIndex)");
+		
 		wordsModel=new WordsModel(this,store,this);
 		main.wordsListView.verticalHeader().setVisible(false);
 		main.wordsListView.horizontalHeader().setVisible(true);
@@ -231,10 +241,8 @@ System.out.println(tr("Bye bye"));
 		main.englishEdit.clear();
 		main.strokeNbrEdit.clear();
 		charModel.clear();
+		radicalModel.clearSelection();
 		charSearchEnabled=true;
-		if(keyList!=null)
-			for(CCharacter c: keyList)
-				c.put("SELECTION", 0);
 	}
 	
 // building a CCharacterSearch and passing it to the datastore
@@ -248,16 +256,12 @@ System.out.println(tr("Bye bye"));
 		req.addStrokeNbr(main.strokeNbrEdit.text());
 		req.addUnicode(main.unicodeEdit.text());
 		req.addChinese(main.characterEdit.text());
-		if(keyList!=null)
-			for(CCharacter c: keyList)
-				if(c.hasInt("SELECTION")&&c.getInt("SELECTION")>0)
-				{
-					System.out.println("###"+c);
-					req.tokensInt.put(c.get("KEY_ID"), 1);
-				}
-					
-//					req.tokensInt.put("COUNT_UNI"+c.get("UNI"), c.getInt("SELECTION"));
-System.out.println(req);
+		List<CCharacter> list=radicalModel.activatedRadicals();
+		for(CCharacter c: list)
+		{
+			System.out.println("###"+c.getInt("KEY_ID"));
+			req.tokensInt.put("KEY_ID", c.getInt("KEY_ID"));
+		}
 		store.lookFor(req);
 	}
 	
@@ -330,8 +334,7 @@ System.out.println(req);
 		char c=((String)(charModel.index(index.row(),0).data())).charAt(0);
 		
 		displayChar(c);
-		}catch(Exception e){}
-		System.out.println(main.selectionView.font());
+		}catch(Exception e){e.printStackTrace();}
 	}
 	
 	public void displayChar(char uni)
@@ -344,70 +347,18 @@ System.out.println(req);
 	
 	
 //	The list of the keys
-	private List<CCharacter> keyList;
+//	private List<CCharacter> keyList;
 //	The list of the strokes
 //	TODO : implement the stroke interface
 	private List<CCharacter> strokesList;
 	
 	public void setupRadicalModel(List<CCharacter> chars)
 	{
-//		main.keysView.setStyleSheet("#keysView{font-size: 20px;font-family: \"Arial Unicode MS\"}");
-// 		main.keysView.installEventFilter(new MyEventFilter(main.keysView));
-		main.keysView.setItemDelegate(new RadicalDelegate(main.keysView));
-		main.keysView.verticalHeader().setDefaultSectionSize(RadicalDelegate.sizeHint().height());
-		main.keysView.horizontalHeader().setDefaultSectionSize(RadicalDelegate.sizeHint().width());
-		main.keysView.verticalHeader().setVisible(false);
-		main.keysView.horizontalHeader().setVisible(false);
-		
-		keyList=chars;
-
-		final int cols=10;
-		Vector< Vector<CCharacter> > myData=new Vector< Vector<CCharacter> >(200);
-		for(int i=0;i<200;i++)
-			myData.add(i,new Vector<CCharacter>());
-			
-		for(CCharacter c : keyList)
-		{
-			myData.get(c.getInt("STROKES")).add(c);
-			c.put("SELECTION",0);
-		}
-
-		radicalModel=new QStandardItemModel(1,cols,this);
-		
-		int i=0,j=0;
-			for(CCharacter c : chars)
-			{
-				radicalModel.setData(radicalModel.index(j,i,null),c);
-				i++;
-				if(i>=cols)
-				{
-					j++;
-					i=0;
-					radicalModel.insertRows(j,1,null);
-				}
-			}
+		radicalModel.fill(chars);
+//		I don't know why, I have nothing if these lines are put before
 		main.keysView.setModel(radicalModel);
-		main.keysView.clicked.connect(this,"clickedKey(QModelIndex)");
-		main.keysView.doubleClicked.connect(this,"doubleclickedKey(QModelIndex)");
-		main.keysView.activated.connect(this,"clickedKey(QModelIndex)");
-	}
-	
-	public void clickedKey(QModelIndex index)
-	{
-System.out.println("+"+index.data());	
-		int u=((CCharacter)index.data()).getInt("SELECTION");
-		((CCharacter)index.data()).put("SELECTION",u+1);
-		radicalModel.dataChanged.emit(index,index);
-	}
-
-	public void doubleclickedKey(QModelIndex index)
-	{
-System.out.println("-"+index.data());	
-		int u=((CCharacter)index.data()).getInt("SELECTION")-4;
-// 		if(u<0)
-// 			u=0;
-		((CCharacter)index.data()).put("SELECTION",u);
-		radicalModel.dataChanged.emit(index,index);
+		main.keysView.clicked.connect(radicalModel,"increaseCount(QModelIndex)");
+		main.keysView.doubleClicked.connect(radicalModel,"decreaseCount(QModelIndex)");
 	}
 	
 
@@ -467,8 +418,6 @@ System.out.println("-"+index.data());
 		ui_configUiWidget.charFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
 		ui_configUiWidget.keyFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
 		ui_configUiWidget.wordFontSpin.valueChanged.connect(this,"configSaveApplyChanges()");
-		
-		
 		
 		dialog.setVisible(true);
 

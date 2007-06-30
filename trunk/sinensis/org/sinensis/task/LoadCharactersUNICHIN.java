@@ -46,12 +46,13 @@ public class LoadCharactersUNICHIN extends Task
 //		Not forget to specify the file locale
 		in.setCodec("UTF-8");
 		int count=0;
+		String uni="";
 		while(!in.atEnd()&&count<maxCount)
 		{
 			count++;
 			String line=in.readLine();
 			String [] t=line.split("\t");
-			final String uni=t[0];
+			uni=t[0];
 			final String[] py0=t[1].split("\\.");
 			final String key=py0[0];
 			final String remStrokes=py0[1];
@@ -68,7 +69,7 @@ public class LoadCharactersUNICHIN extends Task
 			CCharacter cchar=new CCharacter(uni);
 			try{
 			if(key.indexOf("-")<0)
-				cchar.put("KEY_ID",key);
+				cchar.put("KEY_ID",Integer.parseInt(key.replace("'", "")));
 			if(remStrokes.indexOf("-")<0)
 				cchar.put("STROKESREM",Integer.parseInt(remStrokes));
 			if(strokes.indexOf("-")<0)
@@ -88,7 +89,7 @@ public class LoadCharactersUNICHIN extends Task
 			if(comps.indexOf("-")<0)
 				cchar.put("COMPS",comps);
 			dataStore.charMap.put(cchar.getInt("UNI"),cchar);
-			}catch(Exception e){}
+			}catch(Exception e){System.out.println("Could not parse character "+uni+""+e);}
 			
 			setCounter(100*count/totalCount);
 		}

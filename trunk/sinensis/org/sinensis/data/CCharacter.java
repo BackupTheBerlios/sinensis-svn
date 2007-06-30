@@ -53,6 +53,11 @@ public class CCharacter
 	private HashMap<String,Integer> infosInt=new HashMap<String,Integer>();
 	public GlyphNode representation=null;
 	
+//	The score when doing q chqrqcter query
+//	Not thqt useful becquse also stored in the infosInt
+//	TODO : get rid of it
+	public int queryScore=0;
+	
 	public CCharacter(String uni)
 	{
 		put("UNI",uni);
