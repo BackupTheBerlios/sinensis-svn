@@ -79,7 +79,7 @@ public class Settings
 		String py="<div id=\"py\">";
 		for(int i=0;i<pinyin.length;i++)
 		{
-			System.out.println(pinyin[i]);
+//			System.out.println(pinyin[i]);
 			py+=" "+pinyin[i];
 // 			py+="<div id=\"py_"+(i+1)+"\">"+pinyin[i]+"</div>";
 		}
@@ -89,7 +89,7 @@ public class Settings
 		String def="<div id=\"trans\">";
 		for(int i=0;i<defs.length;i++)
 		{
-			System.out.println(defs[i]);
+//			System.out.println(defs[i]);
 			def+="<div id=\"trans_"+(i+1)+"\">"+defs[i]+"</div>";
 		}
 		def+="</div>";
@@ -173,7 +173,7 @@ public class Settings
 // 		if(!doc.setContent(html).success)
 // 			return false;
 // 		charSkelDom=doc;
-		System.out.println("!!!!!!!!!!!!!!!");
+//		System.out.println("!!!!!!!!!!!!!!!");
 		charSkel=html;
 		return true;
 	}	

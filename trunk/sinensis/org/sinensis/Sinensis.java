@@ -30,7 +30,7 @@ import java.util.*;
 
 public class Sinensis extends QMainWindow
 {
-	public final static String versionStr="0.1 SVN ALPHA";
+	public final static String versionStr="0.2 SVN ALPHA";
 	
 //	The font used to render the character selection list
 	public static QFont charViewFont;
@@ -240,8 +240,8 @@ System.out.println(tr("Bye bye"));
 		main.unicodeEdit.clear();
 		main.englishEdit.clear();
 		main.strokeNbrEdit.clear();
-		charModel.clear();
 		radicalModel.clearSelection();
+		charModel.setContent("");
 		charSearchEnabled=true;
 	}
 	
@@ -259,7 +259,7 @@ System.out.println(tr("Bye bye"));
 		List<CCharacter> list=radicalModel.activatedRadicals();
 		for(CCharacter c: list)
 		{
-			System.out.println("###"+c.getInt("KEY_ID"));
+//			System.out.println("###"+c.getInt("KEY_ID"));
 			req.tokensInt.put("KEY_ID", c.getInt("KEY_ID"));
 		}
 		store.lookFor(req);
@@ -331,7 +331,13 @@ System.out.println(tr("Bye bye"));
 	{
 		try
 		{
-		char c=((String)(charModel.index(index.row(),0).data())).charAt(0);
+			if(charModel.index(index.row(),0)==null||charModel.index(index.row(),0).equals(""))
+				return;
+			
+		String s=(String)(charModel.index(index.row(),0).data());
+		if(s.length()<=0)
+			return;
+		char c=s.charAt(0);
 		
 		displayChar(c);
 		}catch(Exception e){e.printStackTrace();}
@@ -341,7 +347,7 @@ System.out.println(tr("Bye bye"));
 	{
 // 		gvManager.loadGlyph(uni);
 		CCharacter c=store.getChar(uni);
-		System.out.println(">>>"+c+"\n>>>"+settings.formatChar(c));
+//		System.out.println(">>>"+c+"\n>>>"+settings.formatChar(c));
 		main.infosBrowser.setText(settings.formatChar(c));
 	}
 	
