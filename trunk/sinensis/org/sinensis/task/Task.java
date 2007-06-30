@@ -30,7 +30,7 @@ public abstract class Task implements Runnable
 	
 	protected void setTaskName(String s)
 	{
-		dataStore.status.emit(s);
+//		dataStore.status.emit(s);
 		mycounter=0;
 	}
 	
@@ -53,7 +53,9 @@ public abstract class Task implements Runnable
 		}
 		
 		public void run()
-		{mainUI.statusBar().showMessage(s);}
+		{
+	//	mainUI.statusBar().showMessage(s);
+		}
 	}
 		
 	public class SetCounter implements Runnable

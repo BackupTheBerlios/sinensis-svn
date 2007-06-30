@@ -21,18 +21,6 @@
       </property>
       <widget class="QWidget" name="layoutWidget" >
        <layout class="QVBoxLayout" >
-        <property name="rightMargin" >
-         <number>0</number>
-        </property>
-        <property name="leftMargin" >
-         <number>0</number>
-        </property>
-        <property name="topMargin" >
-         <number>0</number>
-        </property>
-        <property name="bottomMargin" >
-         <number>0</number>
-        </property>
         <item>
          <widget class="QSplitter" name="splitter_3" >
           <property name="orientation" >
@@ -69,18 +57,6 @@
             <layout class="QVBoxLayout" >
              <item>
               <layout class="QHBoxLayout" >
-               <property name="rightMargin" >
-                <number>0</number>
-               </property>
-               <property name="leftMargin" >
-                <number>0</number>
-               </property>
-               <property name="topMargin" >
-                <number>0</number>
-               </property>
-               <property name="bottomMargin" >
-                <number>0</number>
-               </property>
               </layout>
              </item>
              <item>
@@ -120,18 +96,6 @@
             <layout class="QGridLayout" >
              <item row="0" column="0" >
               <layout class="QGridLayout" >
-               <property name="rightMargin" >
-                <number>0</number>
-               </property>
-               <property name="leftMargin" >
-                <number>0</number>
-               </property>
-               <property name="topMargin" >
-                <number>0</number>
-               </property>
-               <property name="bottomMargin" >
-                <number>0</number>
-               </property>
                <item row="0" column="0" >
                 <widget class="QLabel" name="label" >
                  <property name="text" >
@@ -447,35 +411,11 @@ p, li { white-space: pre-wrap; }
          <layout class="QVBoxLayout" >
           <item>
            <layout class="QHBoxLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>0</number>
-            </property>
             <item>
              <widget class="QGraphicsView" name="displayView" />
             </item>
             <item>
              <layout class="QGridLayout" >
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>0</number>
-              </property>
               <item row="0" column="0" >
                <widget class="QPushButton" name="pushButton_2" >
                 <property name="text" >
@@ -518,32 +458,8 @@ p, li { white-space: pre-wrap; }
        </widget>
        <widget class="QWidget" name="layoutWidget" >
         <layout class="QVBoxLayout" >
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
-          <number>0</number>
-         </property>
          <item>
           <layout class="QHBoxLayout" >
-           <property name="rightMargin" >
-            <number>0</number>
-           </property>
-           <property name="leftMargin" >
-            <number>0</number>
-           </property>
-           <property name="topMargin" >
-            <number>0</number>
-           </property>
-           <property name="bottomMargin" >
-            <number>0</number>
-           </property>
            <item>
             <widget class="QPushButton" name="clearButton" >
              <property name="text" >
