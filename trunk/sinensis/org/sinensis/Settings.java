@@ -45,7 +45,7 @@ public class Settings
 // 	We use a regular XML parser for this one, so you can put whatever you want 
 	private String charSkel="<html>Character:<h1><hzx type=\"string\" name=\"UNI\"/></h1></html>";
 //	private Set<QDomNode> changingNodes=new HashSet<QDomNode>();
-	public String charSkelHtmlPath="data/template-char.html";
+	public String charSkelHtmlPath="classpath:ui/template-char.html";
 
 	public Settings()
 	{
@@ -153,7 +153,11 @@ public class Settings
 	{
 		QFile file=new QFile(filename);
 		if (!file.open(QIODevice.OpenModeFlag.ReadOnly))
+		{
+			System.out.println("Could not load "+filename);
 			return;
+		}
+			
 		QTextStream in=new QTextStream(file);
 		String res="";
 		while (!in.atEnd()) 

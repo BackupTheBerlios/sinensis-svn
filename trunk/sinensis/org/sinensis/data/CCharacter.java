@@ -155,11 +155,48 @@ public class CCharacter
 		return infosInt.keySet();
 	}
 
-	private static int beginningZHUNIrange=toUniInt("4000");
-	private static int endZHUNIrange=toUniInt("9000");
+//	For more information, see http://www.unicode.org/charts
+//	The standard CJK set
+	final private static int UNICJK_BEGIN=toUniInt("4E00");
+	final private static int UNICJK_END=toUniInt("9FBF");
+//	The standard set of radicals
+	final private static int UNICJKRAD_BEGIN=toUniInt("2E80");
+	final private static int UNICJKRAD_END=toUniInt("2EFF");
+//	The standard set of strokes
+	final private static int UNICJKSTROKE_BEGIN=toUniInt("31C0");
+	final private static int UNICJKSTROKE_END=toUniInt("31EF");
+//	The first CJK extension set
+	final private static int UNICJKSUPPA_BEGIN=toUniInt("3400");
+	final private static int UNICJKSUPPA_END=toUniInt("4DBF");
+//	The second CJK extension set
+	final private static int UNICJKSUPPB_BEGIN=toUniInt("20000");
+	final private static int UNICJKSUPPB_END=toUniInt("2A6DF");
+//	The CJK compatibility set
+	final private static int UNICJKCOMP_BEGIN=toUniInt("F900");
+	final private static int UNICJKCOMP_END=toUniInt("FAFF");
+//	The CJK compatibility set complement
+	final private static int UNICJKCOMPSUPP_BEGIN=toUniInt("2F800");
+	final private static int UNICJKCOMPSUPP_END=toUniInt("2FA1F");
 	
 	public static boolean isChineseChar(char c)
 	{
-		return (int)c>=beginningZHUNIrange && (int)c<=endZHUNIrange;
+		final int val=(int)c;
+		if(val>=UNICJKSTROKE_BEGIN&&val<=UNICJKSTROKE_END)
+			return true;
+		if(val>=UNICJKCOMPSUPP_BEGIN&&val<=UNICJKCOMPSUPP_END)
+			return true;
+		if(val>=UNICJKCOMP_BEGIN&&val<=UNICJKCOMP_END)
+			return true;
+		if(val>=UNICJKSUPPA_BEGIN&&val<=UNICJKSUPPA_END)
+			return true;
+		if(val>=UNICJKSUPPB_BEGIN&&val<=UNICJKSUPPB_END)
+			return true;
+		if(val>=UNICJKRAD_BEGIN&&val<=UNICJKRAD_END)
+			return true;
+		if(val>=UNICJK_BEGIN&&val<=UNICJK_END)
+			return true;
+
+
+		return false;
 	}
 }

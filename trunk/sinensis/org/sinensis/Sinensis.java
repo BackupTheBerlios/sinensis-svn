@@ -120,7 +120,7 @@ public class Sinensis extends QMainWindow
 		store.moveToThread(thread);
 		thread.setDaemon(true);
 		thread.start();
-		gvManager=new GlyphViewManager(main.displayView,store);
+		gvManager=new GlyphViewManager(this,main.displayView,store);
 		store.progress.connect(main.progressBar,"setValue(int)",Qt.ConnectionType.QueuedConnection);
 		store.status.connect(statusBar(),"showMessage(String)",Qt.ConnectionType.QueuedConnection);
 		

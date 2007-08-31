@@ -118,7 +118,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:data/editclear.png</iconset>
+                  <iconset>classpath:ui/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -162,7 +162,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:data/editclear.png</iconset>
+                  <iconset>classpath:ui/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -199,7 +199,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:data/editclear.png</iconset>
+                  <iconset>classpath:ui/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -245,7 +245,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:data/editclear.png</iconset>
+                  <iconset>classpath:ui/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -285,7 +285,7 @@ p, li { white-space: pre-wrap; }
                   <string/>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:data/editclear.png</iconset>
+                  <iconset>classpath:ui/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -308,7 +308,7 @@ p, li { white-space: pre-wrap; }
                   <string>Clear search and start new search</string>
                  </property>
                  <property name="icon" >
-                  <iconset>classpath:data/editclear.png</iconset>
+                  <iconset>classpath:ui/editclear.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -466,7 +466,7 @@ p, li { white-space: pre-wrap; }
               <string/>
              </property>
              <property name="icon" >
-              <iconset>classpath:data/editclear.png</iconset>
+              <iconset>classpath:ui/editclear.png</iconset>
              </property>
             </widget>
            </item>

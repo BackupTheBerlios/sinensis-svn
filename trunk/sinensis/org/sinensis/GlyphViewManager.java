@@ -20,41 +20,44 @@
 package org.sinensis;
 
 import org.sinensis.data.*;
+import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
+import org.sinensis.geom.MyTransfoMatrix;
+
 import java.util.*;
 
-public class GlyphViewManager
+public class GlyphViewManager extends QObject
 {
 // 	The view we manage
 	private QGraphicsView view;
 // 	The glyph which is printed
-	private GlyphNode glyph;
+	protected GlyphNode glyph;
 
 // 	The scene which will be associated to the view
-	private QGraphicsScene scene=new QGraphicsScene();
+	protected QGraphicsScene scene=new QGraphicsScene();
 	
 	private DataStore store;
 	
 // 	The pen we use to pain polygons
-	private QPen polyPen=new QPen();
+	protected QPen polyPen=new QPen();
 	
 // 	The bursh used to paint polygons
-//	private QBrush polyBrush=new QBrush();
-//
+	protected QBrush polyBrush=new QBrush();
 	
-// 	Dummy comment
+//	We store the leaf items for fast access
+	protected List<MyPolygonItem> flatList=new LinkedList<MyPolygonItem>();
 	
+//	The representation of the glyph as a tree of graphical elements
+//	Hurray for Qt to providing this class
+	QGraphicsItemGroup glyphGroup;
 	
-//	private QFont displayFont=new QFont();
-	
-	
-	List<MyPolygonItem> flatList=new LinkedList<MyPolygonItem>();
-	
-	public GlyphViewManager(QGraphicsView v, DataStore s)
+	public GlyphViewManager(QObject parent, QGraphicsView v, DataStore s)
 	{
+		super(parent);
 		view=v;
 		view.setScene(scene);
 		store=s;
+		view.setRenderHints(QPainter.RenderHint.Antialiasing);
 	}
 	
 	public void loadGlyph(char c)
@@ -62,67 +65,99 @@ public class GlyphViewManager
 		loadGlyph(store.charMap.get((int)c).representation);
 	}
 	
-	public void loadGlyph(GlyphNode n)
+	final public void loadGlyph(GlyphNode n)
 	{
 // 		We clean up the view
 		for(QGraphicsItemInterface item:scene.items())
 			scene.removeItem(item);
 		
-		glyph=n;
-		
-		if(glyph==null)
+//		We remove whatever data we might have kept
+		flatList.clear();
+
+		if(n==null)
 		{
 			System.out.println("Could not find glyph id "+n);
 			return;
 			
 		}
 		
-		polyPen.setColor(QColor.black);
+		glyph=n;
+		glyphGroup=buildGlyphTree(glyph);
 		
-		addGlyph(glyph);
 		
-		double dX=view.width()/glyph.boundingRect().width();
-		double dY=view.height()/glyph.boundingRect().height();
-		double ratio=0.8*(dX>dY?dY:dX);
+		setupScene();
 		
-		QMatrix matrix=new QMatrix();
-		matrix.scale(ratio,ratio);
-		view.matrix().reset();
-		view.setMatrix(matrix,false);
+		
+//		scene.addRect(glyph.boundingRect());
+		
+		scaleScene();
+		
 // 		view.ensureVisible(glyph.boundingRect());
 
 	}
 	
-	private void addGlyph(GlyphNode node)
+	private QMatrix scalingMatrix = new QMatrix();
+	private QRectF viewRect=new QRectF();
+	final int DEFAULT_MARGIN=20;
+	
+	protected void scaleScene()
 	{
-		for(GlyphNode n:node.children)
-			addGlyph(n);
-			
-		if(!node.isAtomic())
-			return;
-		
-		MyPolygonItem item=new MyPolygonItem(node);
-		flatList.add(item);
-		scene.addItem(item);
+////		MyTransfoMatrix.setMatrixSquare(scalingMatrix, glyph.boundingRect(), scene.);
+//		final double h=glyph.boundingRect().height();
+//		final double w=glyph.boundingRect().width();
+//		if(h>w)
+//		{
+//			viewRect.setTop(glyph.boundingRect().top())
+//		}
+//		
+		view.ensureVisible(glyph.boundingRect(),1,1);
 	}
 	
 	
-	class MyPolygonItem extends QGraphicsPolygonItem
+	protected QGraphicsItemGroup buildGlyphTree(GlyphNode node)
+	{
+		QGraphicsItemGroup group=new QGraphicsItemGroup();
+		
+			
+		if(node.isLeaf())
+		{
+			MyPolygonItem item=new MyPolygonItem(node);
+//			TODO
+//			group.addToGroup(item);
+			flatList.add(item);
+		}
+		else 
+			for(GlyphNode n:node.children())
+				group.addToGroup(buildGlyphTree(n));
+		
+		return group;
+	}
+	
+	
+	public class MyPolygonItem extends QGraphicsPolygonItem
 	{
 		public final static int selected=1,normal=0;
 		
 		public int state=normal;
+		private GlyphNode node;
 		
-//		private GlyphNode _node;
-		public MyPolygonItem(GlyphNode node)
+		public GlyphNode glyphNode()
 		{
-			super(node.polygon());
-//			_node=node;
-//			setAcceptedMouseButtons(new Qt.MouseButtons(Qt.MouseButton.LeftButton) );
+			return node;
+		}
+		
+		public MyPolygonItem(GlyphNode gnode)
+		{
+			super(gnode.polygon());
+			node=gnode;
+			setAcceptedMouseButtons(new Qt.MouseButtons(Qt.MouseButton.LeftButton) );
+			setAcceptsHoverEvents(false);
 		}
 		
 		public void mousePressEvent(QGraphicsSceneMouseEvent event) 
 		{
+System.out.println(event);
+			handlePressEvent(this,event);
 // 			selectedText=((QGraphicsTextItem)data(0));
 // 			String s=selectedText.toPlainText();
 // // 			System.out.println(_node.id+":"+_node.name()+","+s);			
@@ -131,6 +166,69 @@ public class GlyphViewManager
 // 			main.nameEdit.setText(_node.name());
 		}
 		
+		
+		public boolean sceneEvent(QEvent event)
+		{
+			
+			System.out.println(event);
+			if(event instanceof QGraphicsSceneMouseEvent)
+			{
+				handlePressEvent(this,(QGraphicsSceneMouseEvent)event);
+				return true;
+			}
+			else return super.sceneEvent(event);
+		}
+
+		
+		public void mouseMoveEvent(QGraphicsSceneMouseEvent event)
+		{
+			
+		}
+		
+		public void hoverEnterEvent(QGraphicsSceneHoverEvent event)
+		{
+			handleHoverEnterEvent(this,event);
+		}
+		
+		public void hoverLeaveEvent(QGraphicsSceneHoverEvent event)
+		{
+			handleHoverLeaveEvent(this,event);
+		}
+	}
+	
+	
+	
+	public void setupScene()
+	{
+		polyPen.setColor(QColor.black);
+		for(MyPolygonItem item:flatList)
+			scene.addItem(item);
 	}
 
+	public void handlePressEvent(MyPolygonItem item, QGraphicsSceneMouseEvent event)
+	{
+		
+	}
+
+	public void handleHoverEnterEvent(MyPolygonItem item, QGraphicsSceneHoverEvent event)
+	{
+		
+	}
+	
+	public void handleHoverEvent(MyPolygonItem item, QGraphicsSceneHoverEvent event)
+	{
+		
+	}
+
+	public void handleHoverLeaveEvent(MyPolygonItem item, QGraphicsSceneHoverEvent event)
+	{
+		
+	}
+	
+	public QGraphicsScene scene()
+	{
+		return scene;
+	}
+	
 }
+ 
